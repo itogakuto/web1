@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MISEIL</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --color-black: #000;
+      --color-white: #fff;
+      --color-accent: #f36f45;
+      --color-gray: #f5f5f5;
+      --color-orange: #ffa475;
+      --font-family: 'Noto Sans JP', sans-serif;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font-family);
+      background-color: var(--color-white);
+      color: var(--color-black);
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    a:hover {
+      opacity: 0.7;
+    }
+
+    header {
+      width: 100%;
+      background-color: var(--color-white);
+      border-bottom: 1px solid #ddd;
+    }
+
+    .announcement-bar {
+      background: var(--color-black);
+      color: var(--color-white);
+      text-align: center;
+      padding: 6px 10px;
+      font-size: 0.9rem;
+    }
+
+    .header-inner {
+      max-width: 1200px;
+      margin: auto;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-left, .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .logo img {
+      font-weight: bold;
+      font-size: 1.5rem;
+      letter-spacing: 0.1em;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .icon-links {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 600px;
+      background: url('/images/hero.jpg') center/cover no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0,0,0,0.3);
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      color: var(--color-white);
+    }
+
+    .hero-content h2 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-content p {
+      font-size: 1.2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-content .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .hero-content .buttons button {
+      padding: 0.7rem 2rem;
+      border: 1px solid var(--color-white);
+      background: transparent;
+      color: var(--color-white);
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .hero-content .buttons button:hover {
+      background: var(--color-white);
+      color: var(--color-black);
+    }
+
+    .blog-area {
+      background: var(--color-orange);
+      text-align: center;
+      padding: 5rem 1rem;
+    }
+
+    .blog-area p {
+      font-size: 1.4rem;
+      color: var(--color-black);
+      font-weight: 500;
+    }
+
+    @media screen and (max-width: 768px) {
+      .header-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .nav-left, .nav-right {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .hero {
+        height: 400px;
+      }
+      .hero-content h2 {
+        font-size: 1.5rem;
+      }
+    }
+
+    .nav-underline {
+      width: 100%;
+      border-bottom: 2px solid #222;
+      margin-top: 0.3em;
+    }
+
+    .subheader {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: var(--color-white);
+      margin-bottom: 0.5rem;
+      text-align: left;
+    }
+    .subheader-logo {
+      margin-top: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .subheader-nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+      padding: 0;
+      margin: 0;
+      text-align: left;
+    }
+    .subheader-nav a {
+      color: var(--color-black);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1rem;
+      transition: color 0.2s;
+    }
+    .subheader-nav a:hover {
+      color: var(--color-accent);
+      text-decoration: underline;
+    }
+    .subheader-underline {
+      width: 100vw;
+      border-bottom: 1px solid #22222227;
+      margin-top: 0.3em;
+      margin-bottom: 0.5em;
+    }
+
+    .tooltip-text {
+      visibility: hidden;
+      opacity: 0;
+      width: max-content;
+      background: #e1e1e1;
+      color: #000000;
+      text-align: center;
+      border-radius: 6px;
+      padding: 0.4em 0.9em;
+      position: absolute;
+      z-index: 20;
+      top: 120%;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.95em;
+      white-space: nowrap;
+      pointer-events: none;
+      transition: opacity 0.2s, visibility 0.2s;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.13);
+    }
+    .icon-tooltip.active .tooltip-text {
+      visibility: visible;
+      opacity: 1;
+      pointer-events: auto;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="announcement-bar">最終クリアランス:最大20%オフ</div>
+    <div class="header-inner">
+      <div class="logo">
+        <a href="#" class="logo"><img src="https://raw.githubusercontent.com/kzmSuzuki/webPropramming1_1Q/d72c522480320dde15543e2e624df7a4cf36c842/src/icon/MisellDesktop.svg" alt="MISEILロゴ"></a>
+      </div>
+      <div class="nav-right icon-links">
+        <a href="#"><span>🔍</span></a>
+        <a href="#"><span>👤</span></a>
+        <a href="#"><span>♡</span></a>
+        <a href="#"><span>🛒(0)</span></a>
+        <a href="#">日本 JPY(¥)</a>
+        <li class="icon-tooltip">
+          <a href="#" class="icon-btn">
+            <img src="https://raw.githubusercontent.com/kzmSuzuki/webPropramming1_1Q/d72c522480320dde15543e2e624df7a4cf36c842/src/icon/icon-help.svg" alt="help">
+            <span class="tooltip-text">ヘルプ</span>
+          </a>
+        </li>
+      </div>
+    </div>
+    <div class="subheader">
+      <div class="subheader-underline"></div>
+      <nav class="subheader-nav">
+        <ul>
+          <li><a href="#">ショップ</a></li>
+          <li><a href="#">ブログ</a></li>
+          <li><a href="#">コレクションリスト</a></li>
+          <li><a href="#">おすすめ</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-content">
+      <p>オンラインショップ限定</p>
+      <h2>ラストクリアランス</h2>
+      <p>30〜80% off</p>
+      <div class="buttons">
+        <button>ウィメンズ</button>
+        <button>メンズ</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="blog-area">
+    <p>ブログエリア（UI自由）</p>
+  </section>
+
+  <script>
+    document.querySelectorAll('.icon-tooltip .icon-btn').forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        document.querySelectorAll('.icon-tooltip').forEach(tip => tip.classList.remove('active'));
+        this.parentElement.classList.add('active');
+      });
+    });
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.icon-tooltip')) {
+        document.querySelectorAll('.icon-tooltip').forEach(tip => tip.classList.remove('active'));
+      }
+    });
+  </script>
+</body>
+</html>

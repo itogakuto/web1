@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Webサイト（修正版）</title>
+  <style>
+    /* === Base Styles === */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      line-height: 1.5;
+      color: #333;
+    }
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* === Header === */
+    header {
+      width: 100%;
+      background: #fff;
+      border-bottom: 1px solid #ddd;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 100;
+    }
+    .announcement-bar {
+      background: #000;
+      color: #fff;
+      text-align: center;
+      padding: 6px;
+      font-size: 0.9rem;
+    }
+    .header-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+    }
+    .logo img {
+      width: 100px;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 10px;
+    }
+    nav a {
+      color: #000;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1rem;
+    }
+
+    /* === Subheader === */
+    .subheader {
+      background: #fff;
+      border-bottom: 1px solid #ddd;
+      position: fixed;
+      left: 0;
+      width: 100%;
+      z-index: 99;
+    }
+    .subheader nav ul {
+      margin: 0 20px;
+    }
+
+    /* === Main Padding to offset fixed header === */
+    main {
+      padding-top: 96px;
+    }
+
+    /* === Hero Section === */
+    #promotion .hero-content {
+      position: relative;
+      text-align: center;
+      padding: 300px 20px 60px;
+    }
+    #promotion .hero-content img {
+      position: absolute;
+      top: 100px;
+      left: 0;
+      z-index: -1;
+      object-fit: cover;
+      aspect-ratio: 16 / 9;
+    }
+    .hero-content-p1 {
+      font-size: 0.9rem;
+      color: #858585;
+      margin-bottom: 0.5em;
+    }
+    .hero-content-h2 {
+      font-size: 2rem;
+      color: #fff;
+      margin-bottom: 0.5em;
+    }
+    .hero-content-p2 {
+      font-size: 1.2rem;
+      color: #141414;
+      margin-bottom: 1em;
+    }
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+    .buttons button {
+      flex: 1;
+      max-width: 180px;
+      padding: 0.5em;
+      font-size: 1rem;
+      border: 1px solid #000;
+      background: #fff;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .buttons button:hover {
+      background: #000;
+      color: #fff;
+    }
+
+    /* === News List === */
+    #news .news-list-section {
+      max-width: 700px;
+      margin: 2em auto;
+      padding: 0 1em;
+    }
+    .news-list-item {
+      display: flex;
+      gap: 1em;
+      padding: 1em 0;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    .news-list-img {
+      flex-shrink: 0;
+      width: 100px;
+      height: 75px;
+      object-fit: cover;
+      border-radius: 4px;
+      background: #fafafa;
+    }
+    .news-list-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .news-list-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.5em;
+    }
+
+    /* === Collections === */
+    #collections .collections-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1em;
+      margin: 1em;
+    }
+    .product-item {
+      background: #fff;
+      padding: 1em;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5em;
+    }
+
+    /* === All Collections === */
+    #allcollections .allcollections-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1em;
+      margin: 1em;
+    }
+    .allcollections-item {
+      flex: 1 1 calc(50% - 1em);
+      position: relative;
+      height: 200px;
+      overflow: hidden;
+    }
+    .allcollections-item img {
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+    }
+    .allcollections-label {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255,255,255,0.8);
+      padding: 0.5em 1em;
+      font-weight: 500;
+    }
+
+    /* === Carousel === */
+    #carousel .carousel-cards {
+      display: flex;
+      gap: 1em;
+      overflow-x: auto;
+      padding: 1em 0;
+    }
+    .carousel-card {
+      min-width: 250px;
+      background: #fff;
+      overflow: hidden;
+      border-radius: 4px;
+    }
+
+    /* === Newsletter & Footer Grid === */
+    #newsletter .news-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1em;
+      margin: 2em 1em;
+    }
+
+    /* === Footer === */
+    footer {
+      background: #fff;
+      border-top: 1px solid #eee;
+      padding: 1em;
+    }
+    .footer-main {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 1em;
+      justify-content: space-between;
+    }
+
+    /* === Responsive: Tablet === */
+    @media (max-width: 900px) {
+      .hero-content { padding: 200px 10px 40px; }
+      .buttons button { max-width: 140px; }
+      #collections .collections-grid { grid-template-columns: repeat(auto-fit, minmax(150px,1fr)); }
+      #allcollections .allcollections-item { flex: 1 1 calc(100% - 1em); height: 150px; }
+    }
+
+    /* === Responsive: Mobile Narrow (<=400px) === */
+    @media (max-width: 400px) {
+      /* Header */
+      header, .announcement-bar, .header-inner, .subheader {
+        width: 100vw;
+        min-width: 0;
+        box-sizing: border-box;
+      }
+      .header-inner {
+        flex-direction: row;
+        padding: 6px 8px;
+      }
+      .logo img {
+        width: 60px;
+      }
+      nav ul {
+        gap: 4px;
+      }
+      .subheader {
+        height: 36px;
+        top: 44px;
+        font-size: 0.9rem;
+      }
+      .subheader nav ul {
+        margin: 0 4px;
+        gap: 2px;
+      }
+      .subheader nav a {
+        font-size: 0.9rem;
+        padding: 6px 0;
+      }
+      /* Main offset for fixed header+subheader */
+      main {
+        padding-top: 80px;
+      }
+      /* Hero Section */
+      #promotion .hero-content {
+        padding: 60px 4px 16px 4px;
+        min-height: 320px;
+      }
+      #promotion .hero-content img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        min-width: 100vw;
+        height: 320px;
+        min-height: 320px;
+        object-fit: cover;
+        z-index: -1;
+        aspect-ratio: unset;
+      }
+      .hero-content-p1 {
+        font-size: 0.8rem;
+        margin-bottom: 0.3em;
+      }
+      .hero-content-h2 {
+        font-size: 1.2rem;
+        margin-bottom: 0.3em;
+      }
+      .hero-content-p2 {
+        font-size: 1rem;
+        margin-bottom: 0.7em;
+      }
+      .buttons {
+        flex-direction: column;
+        gap: 6px;
+        width: 100%;
+        max-width: 220px;
+        margin: 0 auto;
+      }
+      .buttons button {
+        max-width: 100%;
+        width: 100%;
+        font-size: 1rem;
+        padding: 0.6em 0;
+      }
+      /* News List */
+      #news .news-list-section {
+        max-width: 100vw;
+        margin: 0.5em 0;
+        padding: 0 4px;
+      }
+      .news-list-header {
+        margin-left: 0;
+        margin-bottom: 8px;
+        font-size: 1rem;
+      }
+      .news-list {
+        padding-left: 0;
+      }
+      .news-list-item {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 4px;
+        padding: 10px 0;
+      }
+      .news-list-img {
+        width: 100vw;
+        min-width: 100vw;
+        height: 120px;
+        object-fit: cover;
+        border-radius: 4px;
+      }
+      .news-list-title {
+        font-size: 1rem;
+        margin-bottom: 0.2em;
+      }
+      .news-list-meta {
+        font-size: 0.8rem;
+      }
+      /* Collections */
+      #collections .collections-header {
+        text-align: center;
+        font-size: 1.1rem;
+        padding: 8px 0 4px 0;
+      }
+      #collections .collections-grid {
+        grid-template-columns: 1fr;
+        gap: 8px;
+        margin: 0.5em 0;
+        padding: 0 4px;
+      }
+      .product-item {
+        padding: 6px;
+        gap: 0.3em;
+      }
+      .product-image {
+        width: 100vw;
+        min-width: 100vw;
+        height: 180px;
+        margin-bottom: 4px;
+      }
+      .product-image img {
+        width: 100vw;
+        min-width: 100vw;
+        height: 180px;
+        object-fit: cover;
+      }
+      .badge {
+        font-size: 0.7rem;
+        padding: 2px 6px;
+      }
+      .product-details .brand, .product-details .name, .product-details .price {
+        font-size: 0.95rem;
+      }
+      .color-options {
+        gap: 2px;
+      }
+      .color-circle {
+        width: 12px;
+        height: 12px;
+      }
+      .size-options {
+        gap: 2px;
+      }
+      .size-button {
+        padding: 2px 6px;
+        font-size: 0.9rem;
+      }
+      .quantity-control {
+        gap: 0;
+      }
+      .quantity-control input {
+        width: 24px;
+      }
+      .add-to-cart {
+        width: 100%;
+        font-size: 0.95rem;
+        padding: 6px 0;
+      }
+      .product-actions {
+        gap: 4px;
+      }
+      .star-rating {
+        font-size: 1rem;
+      }
+      .collections-btn {
+        text-align: center;
+        margin: 8px 0;
+      }
+      .collections-btn button {
+        width: 100%;
+        font-size: 1rem;
+        padding: 10px 0;
+      }
+      /* All Collections */
+      #allcollections .allcollections-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin: 0.5em 0;
+        padding: 0 4px;
+      }
+      .allcollections-item, .allcollections-item.wide {
+        width: 100vw;
+        min-width: 100vw;
+        max-width: 100vw;
+        height: 180px;
+        min-height: 180px;
+        margin: 0 auto;
+      }
+      .allcollections-item img, .allcollections-item.wide img {
+        width: 100vw;
+        min-width: 100vw;
+        height: 180px;
+        object-fit: cover;
+      }
+      .allcollections-label, .allcollections-overlay {
+        font-size: 1rem;
+        padding: 4px 0;
+      }
+      .allcollections-title {
+        font-size: 1.1rem;
+      }
+      .allcollections-title-mini {
+        font-size: 0.9rem;
+      }
+      .allcollections-btn-black {
+        font-size: 1rem;
+        padding: 8px 0;
+        width: 100%;
+      }
+      /* Carousel */
+      #carousel .article-carousel {
+        margin: 12px 0;
+      }
+      .carousel-title {
+        font-size: 1.1rem;
+        margin-bottom: 8px;
+      }
+      .carousel-cards {
+        flex-direction: column;
+        gap: 8px;
+        padding: 0 4px;
+      }
+      .carousel-card {
+        width: 100vw;
+        min-width: 100vw;
+        max-width: 100vw;
+        height: 180px;
+        flex-direction: column;
+      }
+      .carousel-card img {
+        width: 100vw;
+        min-width: 100vw;
+        height: 120px;
+        object-fit: cover;
+      }
+      .carousel-card-text {
+        width: 100vw;
+        font-size: 1rem;
+        padding: 4px 0;
+        text-align: center;
+      }
+      .carousel-dots {
+        gap: 4px;
+        margin: 0 auto;
+      }
+      .dot {
+        width: 8px;
+        height: 8px;
+      }
+      /* Newsletter & Footer Grid */
+      #newsletter .news-grid {
+        grid-template-columns: 1fr;
+        gap: 8px;
+        margin: 1em 0.2em;
+        padding: 0 2px;
+      }
+      .news-box {
+        min-height: auto;
+        padding: 8px 2px;
+      }
+      .newsletter-title {
+        font-size: 1rem;
+      }
+      .newsletter-desc {
+        font-size: 0.9rem;
+      }
+      .newsletter-form {
+        flex-direction: column;
+        gap: 4px;
+      }
+      .newsletter-form input[type="email"] {
+        width: 100%;
+        font-size: 0.95rem;
+        padding: 8px 0;
+      }
+      .newsletter-form button {
+        width: 100%;
+        font-size: 1rem;
+        padding: 8px 0;
+      }
+      /* Footer */
+      .footer-main {
+        flex-direction: column;
+        gap: 8px;
+        padding: 8px 2px;
+        text-align: center;
+      }
+      .footer-logo img {
+        width: 40px;
+        height: 40px;
+        margin-bottom: 4px;
+      }
+      .footer-copyright {
+        font-size: 0.9rem;
+        margin: 0 0 4px 0;
+      }
+      .footer-payments {
+        gap: 4px;
+      }
+      .payment-icon {
+        width: 28px;
+        height: 18px;
+        padding: 1px 2px;
+      }
+      .footer-scrolltop {
+        right: 4px;
+        bottom: 4px;
+        width: 32px;
+        height: 32px;
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="announcement-bar">最終クリアランス:最大20%オフ</div>
+    <div class="header-inner">
+      <div class="logo"><a href="#"><img src=".../MisellDesktop.svg" alt="Misell ロゴ"></a></div>
+      <nav>
+        <ul>
+            <li class="icon-tooltip">
+                <a href="#" class="icon-btn">
+                    <img src="https://raw.githubusercontent.com/kzmSuzuki/webPropramming1_1Q/d72c522480320dde15543e2e624df7a4cf36c842/src/icon/icon-help.svg" alt="help">
+                    <span class="tooltip-text">ヘルプ</span>
+                </a>
+            </li>
+            <li class="icon-tooltip">
+                <a href="#" class="icon-btn">
+                    <img src="https://raw.githubusercontent.com/kzmSuzuki/webPropramming1_1Q/d72c522480320dde15543e2e624df7a4cf36c842/src/icon/icon-account.svg" alt="account">
+                    <span class="tooltip-text">アカウント</span>
+                </a>
+            </li>
+            <li class="icon-tooltip">
+                <a href="#" class="icon-btn">
+                    <img src="https://raw.githubusercontent.com/kzmSuzuki/webPropramming1_1Q/d72c522480320dde15543e2e624df7a4cf36c842/src/icon/icon-favorite.svg" alt="favorite">
+                    <span class="tooltip-text">お気に入り</span>
+                </a>
+            </li>
+            <li class="icon-tooltip">
+                <a href="#" class="icon-btn">
+                    <img src="https://raw.githubusercontent.com/kzmSuzuki/webPropramming1_1Q/d72c522480320dde15543e2e624df7a4cf36c842/src/icon/icon-cart.svg" alt="cart">
+                    <span class="tooltip-text">カート</span>
+                    <span class="cart-count-kakko">(</span>
+                    <span class="cart-count">0</span>
+                    <span class="cart-count-kakko">)</span>
+                </a>
+            </li>
+            <li class="icon-tooltip">
+                <a href="#" class="icon-btn">
+                    日本 JPY(¥)
+                    <img src="https://raw.githubusercontent.com/kzmSuzuki/webPropramming1_1Q/d72c522480320dde15543e2e624df7a4cf36c842/src/icon/icon-chevron-down.svg" alt="menu">
+                    <span class="tooltip-text">通貨</span>
+                </a>
+            </li>
+        </ul>
+      </nav>
+    </div>
+    <div class="subheader">
+      <nav>
+        <ul>
+          <li><a href="#promotion">ショップ</a></li>
+          <li><a href="#news">ブログ</a></li>
+          <li><a href="#collections">コレクション</a></li>
+          <li><a href="#">おすすめ</a></li>
+          <li><a href="#"><!-- 検索アイコン -->検索</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section id="promotion">
+      <div class="hero-content">
+        <img src="https://github.com/kzmSuzuki/webPropramming1_1Q/blob/main/src/img/top.jpg?raw=true" alt="hero">
+        <p class="hero-content-p1">オンラインショップ限定</p>
+        <h2 class="hero-content-h2">ラストクリアランス</h2>
+        <p class="hero-content-p2">30〜80% off</p>
+        <div class="buttons">
+          <button>ウィメンズ</button>
+          <button>メンズ</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="news">
+      <div class="news-list-section">
+        <div class="news-list-header">
+          <span class="news-list-title-main">News</span>
+          <span class="news-list-title-sub">ニュース</span>
+        </div>
+        <ul class="news-list">
+          <li class="news-list-item">
+            <img src="https://c.imgz.jp/549/91712549/91712549b_2_d_215.jpg" alt="記事画像" class="news-list-img">
+            <div class="news-list-info">
+              <div class="news-list-title">新商品！ナイロン...</div>
+              <div class="news-list-meta">
+                <span class="news-list-dot" style="background:#00bcd4"></span>
+                <span class="news-list-category">ファッション</span>
+                <span class="news-list-date">2025/05/15</span>
+              </div>
+            </div>
+          </li>
+          <li class="news-list-item">
+            <img src="https://thumb.photo-ac.com/e8/e8be63cab1435b05744b06306e4f9654_t.jpeg" alt="記事画像" class="news-list-img">
+            <div class="news-list-info">
+              <div class="news-list-title" style="color:#e754a6;">こどもでも畳みやすい新商品！...</div>
+              <div class="news-list-meta">
+                <span class="news-list-dot" style="background:#4caf50"></span>
+                <span class="news-list-category">ライフスタイル</span>
+                <span class="news-list-date">2025/05/01</span>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="collections">
+      <div class="collections-header">
+        <h2>コレクションズ</h2>
+      </div>
+      <div class="collections-grid">
+        <div class="product-item">
+          <div class="product-image">
+            <img src="https://github.com/kzmSuzuki/webPropramming1_1Q/blob/main/src/img/collections1.jpg?raw=true" alt="Product Image">
+            <span class="badge">予約注文</span>
+          </div>
+          <div class="product-details">
+            <p class="brand">MISEル</p>
+            <p class="name">サングラス</p>
+            <p class="price">¥10,000</p>
+            <div class="color-options">
+              <span class="color-circle" style="background-color: navy;"></span>
+              <span class="color-circle" style="background-color: beige;"></span>
+              <span class="color-circle" style="background-color: pink;"></span>
+              <span class="color-circle" style="background-color: coral;"></span>
+              <span class="color-circle" style="background-color: olive;"></span>
+              <span class="color-circle" style="background-color: lightgreen;"></span>
+            </div>
+            <div class="size-options">
+              <button class="size-button selected">S</button>
+              <button class="size-button">M</button>
+              <button class="size-button">XL</button>
+            </div>
+            <div class="quantity-control">
+              <button class="quantity-minus">-</button>
+              <input type="text" value="1" class="quantity-input">
+              <button class="quantity-plus">+</button>
+            </div>
+            <div class="button-and-actions">
+              <button class="add-to-cart">カートに入れる</button>
+              <div class="product-actions">
+                <span class="icon">&#x2661;</span>
+                <span class="icon">&#x2696;</span>
+              </div>
+            </div>
+            <div class="star-rating">&#x2605;&#x2605;&#x2605;&#x2605;&#x2605;</div>
+          </div>
+        </div>
+        <div class="product-item">
+          <div class="product-image">
+            <img src="https://github.com/kzmSuzuki/webPropramming1_1Q/blob/main/src/img/collections2.jpg?raw=true" alt="Product Image">
+          </div>
+          <div class="product-details">
+            <p class="brand">MISEル</p>
+            <p class="name">ルーズフィットジーンズ</p>
+            <p class="price">¥40,000</p>
+            <div class="color-options">
+              <span class="color-circle" style="background-color: navy;"></span>
+              <span class="color-circle" style="background-color: beige;"></span>
+              <span class="color-circle" style="background-color: pink;"></span>
+              <span class="color-circle" style="background-color: coral;"></span>
+              <span class="color-circle" style="background-color: olive;"></span>
+              <span class="color-circle" style="background-color: lightgreen;"></span>
+            </div>
+            <div class="size-options">
+              <button class="size-button selected">S</button>
+              <button class="size-button">M</button>
+              <button class="size-button">XL</button>
+            </div>
+            <div class="quantity-control">
+              <button class="quantity-minus">-</button>
+              <input type="text" value="1" class="quantity-input">
+              <button class="quantity-plus">+</button>
+            </div>
+            <div class="button-and-actions">
+              <button class="add-to-cart">カートに入れる</button>
+              <div class="product-actions">
+                <span class="icon">&#x2661;</span>
+                <span class="icon">&#x2696;</span>
+              </div>
+            </div>
+            <div class="star-rating">&#x2605;&#x2605;&#x2605;&#x2605;&#x2605;</div>
+          </div>
+        </div>
+        <div class="product-item">
+          <div class="product-image">
+            <img src="https://github.com/kzmSuzuki/webPropramming1_1Q/blob/main/src/img/collections3.jpg?raw=true" alt="Product Image">
+          </div>
+          <div class="product-details">
+            <p class="brand">MISEル</p>
+            <p class="name">ニットウェア</p>
+            <p class="price">¥30,000</p>
+            <div class="color-options">
+              <span class="color-circle" style="background-color: navy;"></span>
+              <span class="color-circle" style="background-color: beige;"></span>
+              <span class="color-circle" style="background-color: pink;"></span>
+              <span class="color-circle" style="background-color: coral;"></span>
+              <span class="color-circle" style="background-color: olive;"></span>
+              <span class="color-circle" style="background-color: lightgreen;"></span>
+            </div>
+            <div class="size-options">
+              <button class="size-button selected">S</button>
+              <button class="size-button">M</button>
+              <button class="size-button">XL</button>
+            </div>
+            <div class="quantity-control">
+              <button class="quantity-minus">-</button>
+              <input type="text" value="1" class="quantity-input">
+              <button class="quantity-plus">+</button>
+            </div>
+            <div class="button-and-actions">
+              <button class="add-to-cart">カートに入れる</button>
+              <div class="product-actions">
+                <span class="icon">&#x2661;</span>
+                <span class="icon">&#x2696;</span>
+              </div>
+            </div>
+            <div class="star-rating">&#x2605;&#x2605;&#x2605;&#x2605;&#x2605;</div>
+          </div>
+        </div>
+        <div class="product-item">
+          <div class="product-image">
+            <img src="https://github.com/kzmSuzuki/webPropramming1_1Q/blob/main/src/img/collections4.jpg?raw=true" alt="Product Image">
+            <span class="badge">予約注文</span>
+          </div>
+          <div class="product-details">
+            <p class="brand">MISEル</p>
+            <p class="name">ダウンベスト</p>
+            <p class="price">¥50,000</p>
+            <div class="color-options">
+              <span class="color-circle" style="background-color: navy;"></span>
+              <span class="color-circle" style="background-color: beige;"></span>
+              <span class="color-circle" style="background-color: pink;"></span>
+              <span class="color-circle" style="background-color: coral;"></span>
+              <span class="color-circle" style="background-color: olive;"></span>
+              <span class="color-circle" style="background-color: lightgreen;"></span>
+            </div>
+            <div class="size-options">
+              <button class="size-button selected">S</button>
+              <button class="size-button">M</button>
+              <button class="size-button">XL</button>
+            </div>
+            <div class="quantity-control">
+              <button class="quantity-minus">-</button>
+              <input type="text" value="1" class="quantity-input">
+              <button class="quantity-plus">+</button>
+            </div>
+            <div class="button-and-actions">
+              <button class="add-to-cart">カートに入れる</button>
+              <div class="product-actions">
+                <span class="icon">&#x2661;</span>
+                <span class="icon">&#x2696;</span>
+              </div>
+            </div>
+            <div class="star-rating">&#x2605;&#x2605;&#x2605;&#x2605;&#x2605;</div>
+          </div>
+        </div>
+      </div>
+      <div class="collections-btn">
+        <button>すべてのコレクションを見る</button>
+      </div>
+    </section>
+
+    <section id="allcollections">
+      <div class="allcollections-grid">
+        <div class="allcollections-item">
+          <img src="https://raw.githubusercontent.com/kzmSuzuki/webPropramming1_1Q/main/src/img/womens.jpg" alt="ウィメンズ">
+          <div class="allcollections-label">ウィメンズ</div>
+        </div>
+        <div class="allcollections-item">
+          <img src="https://raw.githubusercontent.com/kzmSuzuki/webPropramming1_1Q/main/src/img/mens.jpg" alt="メンズ">
+          <div class="allcollections-label">メンズ</div>
+        </div>
+        <div class="allcollections-item goods">
+          <img src="https://raw.githubusercontent.com/kzmSuzuki/webPropramming1_1Q/main/src/img/goods.jpg" alt="グッズ">
+          <div class="allcollections-label">グッズ</div>
+        </div>
+        <div class="allcollections-item wide">
+          <img src="https://raw.githubusercontent.com/kzmSuzuki/webPropramming1_1Q/main/src/img/color.jpg" alt="新着">
+          <div class="allcollections-overlay">
+            <div class="allcollections-desc">新着</div>
+            <div class="allcollections-title">選べるカラー</div>
+            <div class="allcollections-title-mini">色鮮やかなエッセンシャルスタイル</div>
+            <button class="allcollections-btn-black">詳細を見る</button>
+          </div>
+        </div>
+        <div class="allcollections-item wide">
+          <img src="https://raw.githubusercontent.com/kzmSuzuki/webPropramming1_1Q/main/src/img/colaboration.jpg" alt="コラボレーション">
+          <div class="allcollections-overlay">
+            <div class="allcollections-desc">それらすべてを発見</div>
+            <div class="allcollections-title">コラボレーション</div>
+            <button class="allcollections-btn-black">詳細を見る</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="carousel">
+      <div class="article-carousel">
+        <h2 class="carousel-title">記事カルーセル</h2>
+        <div class="carousel-cards">
+          <div class="carousel-card">
+            <img src="https://github.com/kzmSuzuki/webPropramming1_1Q/blob/main/src/img/2025SpringSummer.jpg?raw=true" alt="2025春夏コレクション">
+            <div class="carousel-card-text">2025春夏コレクション</div>
+          </div>
+          <div class="carousel-card">
+            <img src="https://github.com/kzmSuzuki/webPropramming1_1Q/blob/main/src/img/LifeWearMagazine.jpg?raw=true" alt="LifeWear magazine 春夏号">
+            <div class="carousel-card-text">LifeWear magazine<br>春夏号</div>
+          </div>
+        </div>
+        <div class="carousel-dots">
+          <span class="dot active"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+        </div>
+      </div>
+    </section>
+
+    <section id="newsletter">
+      <div class="news-grid">
+        <div class="news-box news-box-top news-box-top-left">
+          <div>
+            <div class="newsletter-title">メルマガの購読</div>
+            <div class="newsletter-desc">『MISEル』のメルマガを登録してオトクな情報・最新の情報を受け取ろう！</div>
+          </div>
+        </div>
+        <div class="news-box news-box-top news-box-top-right">
+          <form class="newsletter-form">
+            <input type="email" placeholder="メールアドレスを入力してください" required>
+            <button type="submit">購読!</button>
+          </form>
+        </div>
+        <div class="news-box news-box-bottom news-box-bottom-left">
+          <div>
+            <div class="footer-section-title">ご注文</div>
+            <ul class="footer-orders-list">
+              <li>個人アカウント</li>
+              <li>カートを見る</li>
+              <li>プライバシーポリシー</li>
+              <li>クッキーの使用</li>
+            </ul>
+          </div>
+        </div>
+        <div class="news-box news-box-bottom news-box-bottom-center">
+          <div>
+            <div class="footer-section-title">フッター情報</div>
+            <div class="footer-info-desc">ご不明な点ございましたらよくある質問をご覧ください。<br>またはカスタマーサービスまでお問い合わせください。</div>
+            <div class="footer-section-title">カスタマーサービス</div>
+            <ul class="footer-contact">
+              <li><span class="footer-icon"><img src="https://raw.githubusercontent.com/kzmSuzuki/webPropramming1_1Q/d72c522480320dde15543e2e624df7a4cf36c842/src/icon/icon-tel.svg"></span>電話番号: 00-0000-0000</li>
+              <li><span class="footer-icon"><img src="https://raw.githubusercontent.com/kzmSuzuki/webPropramming1_1Q/d72c522480320dde15543e2e624df7a4cf36c842/src/icon/icon-clock.svg"></span>月曜 - 金曜: 9:00 am - 6:00 pm</li>
+              <li><span class="footer-icon"></span>土曜: 9:00 am - 4:00 pm</li>
+              <li><span class="footer-icon"></span>日曜: 9:00 am - 2:00 pm</li>
+              <li><span class="footer-icon"><img src="https://raw.githubusercontent.com/kzmSuzuki/webPropramming1_1Q/d72c522480320dde15543e2e624df7a4cf36c842/src/icon/icon-mail.svg"></span>E-mailでのお問い合わせ</li>
+            </ul>
+          </div>
+        </div>
+        <div class="news-box news-box-bottom news-box-bottom-right">
+          <div>
+            <div class="footer-section-title">SNSをフォロー</div>
+            <ul class="footer-sns-list">
+              <li><span class="footer-icon"><img src="https://raw.githubusercontent.com/kzmSuzuki/webPropramming1_1Q/d72c522480320dde15543e2e624df7a4cf36c842/src/icon/Icon-facebook.svg"></span> Facebook</li>
+              <li><span class="footer-icon"><img src="https://raw.githubusercontent.com/kzmSuzuki/webPropramming1_1Q/d72c522480320dde15543e2e624df7a4cf36c842/src/icon/Icon-x.svg"></span> Twitter</li>
+              <li><span class="footer-icon"><img src="https://raw.githubusercontent.com/kzmSuzuki/webPropramming1_1Q/d72c522480320dde15543e2e624df7a4cf36c842/src/icon/Icon-Instagram.svg"></span> Instagram</li>
+              <li><span class="footer-icon"><img src="https://raw.githubusercontent.com/kzmSuzuki/webPropramming1_1Q/d72c522480320dde15543e2e624df7a4cf36c842/src/icon/Icon-pinterest.svg"></span> Pinterest</li>
+              <li><span class="footer-icon"><img src="https://raw.githubusercontent.com/kzmSuzuki/webPropramming1_1Q/d72c522480320dde15543e2e624df7a4cf36c842/src/icon/Icon-Youtube.svg"></span> YouTube</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-main">
+      <div class="footer-logo">
+        <img src="https://raw.githubusercontent.com/kzmSuzuki/webPropramming1_1Q/main/src/icon/MisellDesktop.svg" alt="Misell ロゴ">
+      </div>
+      <div class="footer-copyright">
+        Copyright ©2024, Misell Powered by Shopify
+      </div>
+      <div class="footer-payments">
+        <img src="https://raw.githubusercontent.com/kzmSuzuki/webPropramming1_1Q/d72c522480320dde15543e2e624df7a4cf36c842/src/icon/icon-Visa.svg" alt="VISA" class="payment-icon">
+        <img src="https://raw.githubusercontent.com/kzmSuzuki/webPropramming1_1Q/d72c522480320dde15543e2e624df7a4cf36c842/src/icon/icon-payment-jcb.svg" alt="JCB" class="payment-icon">
+        <img src="https://raw.githubusercontent.com/kzmSuzuki/webPropramming1_1Q/d72c522480320dde15543e2e624df7a4cf36c842/src/icon/icon-payment-shopify-pay.svg" alt="Apple Pay" class="payment-icon">
+        <img src="https://raw.githubusercontent.com/kzmSuzuki/webPropramming1_1Q/d72c522480320dde15543e2e624df7a4cf36c842/src/icon/icon-payment-google-pay.svg" alt="Google Pay" class="payment-icon">
+      </div>
+    </div>
+    <button class="footer-scrolltop" onclick="window.scrollTo({top:0,behavior:'smooth'});" title="ページトップへ">↑</button>
+  </footer>
+
+  <script>
+    // JavaScriptは元のまま (省略)
+  </script>
+</body>
+</html>

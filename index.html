@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ファッションブランド サンプル</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --main-bg: #fff;
+      --accent: #ffb48a;
+      --gray-bg: #f5f5f5;
+      --primary: #222;
+      --secondary: #888;
+      --button-bg: #222;
+      --button-hover: #ffb48a;
+      --link: #222;
+      --link-hover: #ffb48a;
+    }
+    html {
+      box-sizing: border-box;
+      font-size: 16px;
+    }
+    *, *::before, *::after {
+      box-sizing: inherit;
+    }
+    body {
+      margin: 0;
+      font-family: 'Noto Sans JP', sans-serif;
+      background: var(--main-bg);
+      color: var(--primary);
+      line-height: 1.7;
+    }
+    header {
+      background: var(--main-bg);
+      border-bottom: 1px solid #eee;
+      padding: 0.5rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .header-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      padding: 0 1rem;
+      justify-content: space-between; /* これを追加！ */
+    }
+    .logo {
+      font-weight: bold;
+      font-size: 1.5rem;
+      letter-spacing: 0.1em;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+      margin: 0;
+      padding: 0;
+    }
+    nav a {
+      color: var(--link);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s;
+      position: relative;
+    }
+    nav a:hover {
+      color: var(--link-hover);
+    }
+    nav a::after {
+      content: '';
+      display: flex;
+      width: 0;
+      height: 2px;
+      background: var(--link-hover);
+      transition: width 0.2s;
+      position: absolute;
+      left: 0;
+      bottom: -2px;
+    }
+    nav a:hover::after {
+      width: 100%;
+    }
+    .kv {
+      width: 100%;
+      height: 340px;
+      background: #eee url('images/IMG_7605.jpg') center/cover no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .kv-text {
+      background: rgba(255,255,255,0.7);
+      padding: 2rem 2.5rem;
+      border-radius: 12px;
+      text-align: center;
+    }
+    .kv-text h1 {
+      font-size: 2rem;
+      margin: 0 0 0.5rem;
+      font-weight: 700;
+    }
+    .kv-text p {
+      font-size: 1.1rem;
+      margin: 0 0 1rem;
+    }
+    .kv-text .kv-btn {
+      display: inline-block;
+      background: var(--button-bg);
+      color: #fff;
+      border: none;
+      border-radius: 24px;
+      padding: 0.7rem 2.5rem;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+      text-decoration: none;
+      margin: 0 0.5rem;
+    }
+    .kv-text .kv-btn:hover {
+      background: var(--button-hover);
+      color: var(--primary);
+    }
+    .news-section {
+      background: var(--gray-bg);
+      padding: 2rem 0 1.5rem;
+    }
+    .news-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+    .news-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      letter-spacing: 0.05em;
+    }
+    .news-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+    .news-item {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      background: #fff;
+      border-radius: 8px;
+      padding: 0.7rem 1.2rem;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+      font-size: 1rem;
+    }
+    .news-date {
+      color: var(--secondary);
+      font-size: 0.95em;
+      min-width: 6em;
+    }
+    .news-link {
+      color: var(--link);
+      text-decoration: underline;
+      transition: color 0.2s;
+    }
+    .news-link:hover {
+      color: var(--link-hover);
+    }
+    .collections-section {
+      max-width: 1100px;
+      margin: 2.5rem auto 0;
+      padding: 0 1rem;
+    }
+    .collections-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 1.2rem;
+      letter-spacing: 0.05em;
+    }
+    .collections-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 2rem;
+    }
+    .collection-card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .collection-card:hover {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.13);
+    }
+    .collection-img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      background: #eee;
+    }
+    .collection-body {
+      padding: 1.2rem 1rem 1.5rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .collection-name {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .collection-desc {
+      color: var(--secondary);
+      font-size: 0.97rem;
+      margin-bottom: 0.7rem;
+    }
+    .collection-btn {
+      align-self: flex-start;
+      background: var(--button-bg);
+      color: #fff;
+      border: none;
+      border-radius: 20px;
+      padding: 0.5rem 1.5rem;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+      text-decoration: none;
+    }
+    .collection-btn:hover {
+      background: var(--button-hover);
+      color: var(--primary);
+    }
+    footer {
+      background: #222;
+      color: #fff;
+      padding: 2rem 0 1rem;
+      margin-top: 3rem;
+    }
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+    .footer-links {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.5rem;
+    }
+    .footer-links a {
+      color: #fff;
+      text-decoration: none;
+      transition: color 0.2s;
+      font-size: 1rem;
+    }
+    .footer-links a:hover {
+      color: var(--button-hover);
+    }
+    .footer-copy {
+      font-size: 0.95rem;
+      color: #bbb;
+    }
+    @media (max-width: 700px) {
+      .header-inner, .collections-section, .footer-inner, .news-inner {
+        padding: 0 0.5rem;
+      }
+      .kv {
+        height: 180px;
+      }
+      .kv-text {
+        padding: 1rem 0.7rem;
+      }
+      .collections-list {
+        gap: 1rem;
+      }
+      .footer-inner {
+        gap: 0.7rem;
+      }
+    }
+    @media (max-width: 480px) {
+      .header-inner {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      nav ul {
+        gap: 1rem;
+      }
+      .kv-text h1 {
+        font-size: 1.2rem;
+      }
+      .collections-title, .news-title {
+        font-size: 1.1rem;
+      }
+    }
+    .icon-tooltip {
+      position: relative;
+      display: inline-block;
+    }
+    .icon-tooltip .tooltip-text {
+      visibility: hidden;
+      opacity: 0;
+      width: max-content;
+      background: #e1e1e1;
+      color: #000000;
+      text-align: center;
+      border-radius: 6px;
+      padding: 0.4em 0.9em;
+      position: absolute;
+      z-index: 20;
+      top: 120%;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.95em;
+      white-space: nowrap;
+      pointer-events: none;
+      transition: opacity 0.2s, visibility 0.2s;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.13);
+    }
+    .icon-tooltip:focus-within .tooltip-text {
+      visibility: visible;
+      opacity: 1;
+    }
+    .icon-tooltip .cart-count {
+      position: relative;
+      top: -2px;
+    }
+    .icon-tooltip .cart-count-kakko {
+      position: relative;
+      top: -2px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <div class="logo">
+        <a href="#"><img src="https://raw.githubusercontent.com/kzmSuzuki/webPropramming1_1Q/d72c522480320dde15543e2e624df7a4cf36c842/src/icon/MisellDesktop.svg" alt="Misei ロゴ"></a>
+      </logo>
+      <nav>
+        <ul>
+          <li class="icon-tooltip">
+            <a href="#help">
+              <img src="https://raw.githubusercontent.com/kzmSuzuki/webPropramming1_1Q/d72c522480320dde15543e2e624df7a4cf36c842/src/icon/icon-help.svg" alt="help">
+              <span class="tooltip-text">ヘルプ</span>
+            </a>
+          </li>
+          <li class="icon-tooltip">
+            <a href="#account">
+              <img src="https://raw.githubusercontent.com/kzmSuzuki/webPropramming1_1Q/d72c522480320dde15543e2e624df7a4cf36c842/src/icon/icon-account.svg" alt="account">
+              <span class="tooltip-text">アカウント</span>
+            </a>
+          </li>
+          <li class="icon-tooltip">
+            <a href="#favorite">
+              <img src="https://raw.githubusercontent.com/kzmSuzuki/webPropramming1_1Q/d72c522480320dde15543e2e624df7a4cf36c842/src/icon/icon-favorite.svg" alt="favorite">
+              <span class="tooltip-text">お気に入り</span>
+            </a>
+          </li>
+          <li class="icon-tooltip">
+            <a href="#cart">
+              <img src="https://raw.githubusercontent.com/kzmSuzuki/webPropramming1_1Q/d72c522480320dde15543e2e624df7a4cf36c842/src/icon/icon-cart.svg" alt="cart">
+              <span class="tooltip-text">カート</span>
+              <span class="cart-count-kakko">(</span>
+              <span class="cart-count">0</span>
+              <span class="cart-count-kakko">)</span>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <section class="kv">
+      <div class="kv-text">
+        <h1>ラストクリアランス</h1>
+        <p>最大80%OFF！今だけの特別セール</p>
+        <a href="#collections" class="kv-btn">コレクションを見る</a>
+        <a href="#news" class="kv-btn">新着ニュース</a>
+      </div>
+    </section>
+    <section class="news-section" id="news">
+      <div class="news-inner">
+        <div class="news-title">新着ニュース</div>
+        <div class="news-list">
+          <div class="news-item">
+            <span class="news-date">2024/04/20</span>
+            <a href="#" class="news-link">新作コレクション公開</a>
+          </div>
+          <div class="news-item">
+            <span class="news-date">2024/04/15</span>
+            <a href="#" class="news-link">春のセール開催中</a>
+          </div>
+          <div class="news-item">
+            <span class="news-date">2024/04/10</span>
+            <a href="#" class="news-link">公式サイトリニューアル</a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="collections-section" id="collections">
+      <div class="collections-title">コレクション</div>
+      <div class="collections-list">
+        <div class="collection-card">
+          <img src="images/IMG_7605.jpg" alt="コレクション1" class="collection-img">
+          <div class="collection-body">
+            <div class="collection-name">サマーシャツ</div>
+            <div class="collection-desc">涼しげなデザインの新作シャツ。</div>
+            <a href="#" class="collection-btn">詳細を見る</a>
+          </div>
+        </div>
+        <div class="collection-card">
+          <img src="images/IMG_7606.jpg" alt="コレクション2" class="collection-img">
+          <div class="collection-body">
+            <div class="collection-name">カジュアルパンツ</div>
+            <div class="collection-desc">動きやすさとデザイン性を両立。</div>
+            <a href="#" class="collection-btn">詳細を見る</a>
+          </div>
+        </div>
+        <div class="collection-card">
+          <img src="images/IMG_7607.jpg" alt="コレクション3" class="collection-img">
+          <div class="collection-body">
+            <div class="collection-name">ライトアウター</div>
+            <div class="collection-desc">春夏にぴったりの軽やかアウター。</div>
+            <a href="#" class="collection-btn">詳細を見る</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-links">
+        <a href="#">プライバシーポリシー</a>
+        <a href="#">利用規約</a>
+        <a href="#">お問い合わせ</a>
+      </div>
+      <div class="footer-copy">&copy; 2024 Misei. All rights reserved.</div>
+    </div>
+  </footer>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const logoLink = document.querySelector('logo a');
+      if (logoLink) {
+        logoLink.addEventListener('click', function(e) {
+          e.preventDefault();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      }
+      let cartCount = 0;
+      const cartCountSpan = document.querySelector('.cart-count');
+      if (cartCountSpan) {
+        cartCountSpan.textContent = cartCount;
+      }
+    });
+  </script>
+</body>
+</html> 

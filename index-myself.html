@@ -1,0 +1,2123 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webサイト</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+        }
+        header {
+            width: 100%;
+            background-color: #ffffff;
+            border-bottom: 1px solid #ddd;
+            position: fixed;
+            z-index: 100;
+        }
+        header a {
+            text-decoration: none;
+            color: #000000;
+        }
+        header a:hover {
+            color: #000000;
+        }
+        header ul {
+            list-style: none;
+            margin: 7px 20px;
+        }
+        header li {
+            display: inline-block;
+            margin-right: 10px;
+        }
+        header li a {
+            text-decoration: none;
+            color: #000000;
+        }
+        .announcement-bar {
+            background: #000000;
+            color: #ffffff;
+            text-align: center;
+            padding: 6px 10px;
+            font-size: 0.9rem;
+        }
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+        }
+        .logo {
+            width: 100px;
+        }
+        .subheader {
+            width: 100%;
+            height: 40px;
+            background-color: #ffffff;
+            border-bottom: 1px solid #ddd;
+        }
+        .subheader-underline {
+            width: 100%;
+            border-bottom: 1px solid #22222227;
+        }
+        .subheader-nav {
+            display: flex;
+            justify-content: space-between;
+        }
+        .cart-count {
+            position: relative;
+            top: -2px;
+        }
+        .cart-count-kakko {
+            position: relative;
+            top: -3px;
+        }
+        .icon-tooltip {
+            position: relative;
+        }
+        .icon-tooltip .tooltip-text {
+            visibility: hidden;
+            opacity: 0;
+            width: max-content;
+            background: #e1e1e1;
+            color: #000000;
+            text-align: center;
+            border-radius: 6px;
+            padding: 0.4em 0.9em;
+            position: absolute;
+            z-index: 20;
+            top: 120%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.95em;
+            white-space: nowrap;
+            pointer-events: none;
+            transition: opacity 0.2s, visibility 0.2s;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.13);
+        }
+        .icon-tooltip.active .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .subheader nav a {
+            position: relative;
+            color: #000000;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: color 0.2s;
+        }
+        .subheader nav a::after {
+            content: '';
+            display: block;
+            width: 0;
+            height: 2px;
+            background: #222;
+            transition: width 0.2s;
+            position: absolute;
+            left: 0;
+            bottom: -2px;
+        }
+        .subheader nav a:hover::after {
+            width: 100%;
+        }
+        .subheader-nav-right {
+            margin-left: auto;
+        }
+        .subheader nav ul {
+            display: flex;
+        }
+        .subheader-nav-right img {
+            width: 16px;
+            height: 16px;
+            position: relative;
+            top: 2px;
+        }
+        .hero-content {
+            text-align: center;
+            padding: 400px 20px;
+        }
+        .hero-content img {
+            width: 100%;
+            height: 100%;
+            margin-bottom: 20px;
+            object-fit: cover;
+            position: absolute;
+            top: 100px;
+            left: 0;
+            z-index: -1;
+        }
+        .hero-content p {
+            font-weight: 400;
+        }
+        .hero-content-p1 {
+            font-size: 15px;
+            color: #858585;
+        }
+        .hero-content-h2 {
+            font-size: 32px;
+            font-weight: 400;
+            margin-bottom: 0px;
+            color: white;
+        }
+        .hero-content-p2 {
+            font-size: 18px;
+            color: #141414;
+        }
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .buttons button {
+            width: 220px;
+            height: 35px;
+            font-size: 1rem;
+            border: 1px solid #000;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .buttons button:hover {
+            background: #000;
+            color: #fff;
+        }
+        .blog-content {
+            text-align: center;
+            padding: 100px 20px;
+        }
+        .blog-content-p1 {
+            font-size: 15px;
+        }
+        .collections-header {
+            text-align: center;
+            padding: 20px 20px;
+            font-size: 24px;
+            font-weight: 400;
+        }
+        .collections-grid {
+            display: grid;
+            align-items: center;
+            justify-content: center;
+            align-content: center;
+            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+            gap: 15px;
+            padding: 0 40px 40px;
+            margin: 10px 100px 10px 100px;
+        }
+        .product-item {
+            padding: 15px;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+        }
+        .product-image {
+            position: relative;
+            width: 270px;
+            height: 346px;
+            margin-bottom: 10px;
+        }
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
+            object-position: center;
+            z-index: -10;
+        }
+        .product-image .badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: yellow;
+            padding: 3px 8px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        .product-details .brand {
+            font-size: 0.9rem;
+            color: #555;
+            margin-bottom: 5px;
+        }
+        .product-details .name {
+            font-size: 1rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .product-details .price {
+            font-size: 1.1rem;
+            color: #000;
+            margin-bottom: 10px;
+        }
+        .color-options {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+        .color-circle {
+            display: inline-block;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            border: 1px solid #ddd;
+        }
+        .size-options {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 10px;
+            position: relative;
+        }
+        .size-button {
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            cursor: pointer;
+        }
+        .size-button.selected {
+            border-color: #000;
+            font-weight: bold;
+        }
+        .size-tooltip {
+            position: absolute;
+            bottom: 100%;
+            left: 0;
+            transform: translateX(-25%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s;
+        }
+        .size-options:hover .size-tooltip {
+             opacity: 1;
+             visibility: visible;
+        }
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            border: 1px solid #ccc;
+            width: fit-content;
+            margin-bottom: 10px;
+        }
+        .quantity-control button {
+            padding: 5px 10px;
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+        }
+        .quantity-control input {
+            width: 30px;
+            text-align: center;
+            border: none;
+            outline: none;
+        }
+        .add-to-cart {
+            width: 80%;
+            padding: 10px;
+            background-color: #000;
+            color: #fff;
+            cursor: pointer;
+            margin-bottom: 0;
+        }
+        .product-actions {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 0;
+            align-items: center;
+        }
+        .product-actions .icon {
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+        .star-rating {
+            color: black;
+            font-size: 1.1rem;
+        }
+        .button-and-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .collections-btn {
+            text-align: center;
+            font-size: 20px;
+            margin: 0px 0;
+        }
+        .collections-btn button {
+            padding: 18px 60px;
+            background-color: #000;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .collections-btn button:hover {
+            background-color: #333;
+        }        
+        .allcollections-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            margin: 20px 0 20px 0;
+        }
+        .allcollections-row {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+        /* --- allcollections 共通ボックススタイル --- */
+        .allcollections-item {
+            position: relative;
+            background: #fff;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+            width: 400px;
+            height: 400px;
+            max-width: 400px;
+            max-height: 400px;
+            min-width: 400px;
+            min-height: 400px;
+            flex: 1 1 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+        .allcollections-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        /* --- allcollections ラベル（通常時：下部白帯） --- */
+        .allcollections-label {
+            z-index: 2;
+            transition: all 0.2s;
+            position: absolute;
+            left: 50%;
+            bottom: 20px;
+            top: auto;
+            transform: translateX(-50%);
+            background: rgba(255,255,255,0.95);
+            color: #222;
+            font-size: 1.1rem;
+            text-align: center;
+            padding: 8px 0 8px 0;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            width: 80%;
+            border-radius: 2px;
+        }
+        /* --- ホバー時：中央ラベル＋白オーバーレイ --- */
+        .allcollections-item::before {
+            content: '';
+            position: absolute;
+            top: 5%;
+            left: 5%;
+            width: 90%;
+            height: 90%;
+            background: rgba(255,255,255,0.85);
+            z-index: 1;
+            border-radius: 4px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s;
+        }
+        .allcollections-item:hover::before {
+            opacity: 1;
+        }
+        .allcollections-item:hover .allcollections-label {
+            top: 50%;
+            left: 50%;
+            bottom: auto;
+            transform: translate(-50%, -50%);
+            background: none;
+            color: #222;
+            font-size: 1.1rem;
+            width: auto;
+            padding: 0;
+        }
+        /* --- ワイドボックスはホバー効果なし（!importantなしで上書き） --- */
+        .allcollections-item.wide:hover::before {
+            opacity: 0;
+        }
+        .allcollections-item.wide:hover .allcollections-label {
+            top: auto;
+            left: 50%;
+            bottom: 20px;
+            transform: translateX(-50%);
+            background: rgba(255,255,255,0.95);
+            color: #222;
+            width: 80%;
+            padding: 8px 0 8px 0;
+        }
+        .allcollections-item.wide {
+            min-width: 605px;
+            max-width: 605px;
+            flex: 2 1 0;
+        }
+        .allcollections-item.wide img {
+            height: 400px;
+        }
+        .allcollections-overlay {
+            position: absolute;
+            top: 5%;
+            left: 5%;
+            width: 90%;
+            height: 90%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .allcollections-title {
+            font-size: 24px;
+            font-weight: 400;
+            margin-bottom: 12px;
+        }
+        .allcollections-desc {
+            color: #fff;
+            font-size: 15px;
+            font-weight: 400;
+            margin-bottom: 12px;
+        }
+        .allcollections-title-mini {
+            color: #000;
+            font-size: 15px;
+            font-weight: 400;
+            margin-bottom: 12px;
+        }
+        .allcollections-btn-black {
+            background: #000;
+            color: #fff;
+            border: none;
+            padding: 10px 28px;
+            font-size: 1rem;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .allcollections-btn-black:hover {
+            background: #333;
+        }
+        .article-carousel {
+            width: 100%;
+            margin: 60px 0 0 0;
+            text-align: center;
+        }
+        .carousel-title {
+            font-size: 2rem;
+            font-weight: 500;
+            margin-bottom: 30px;
+        }
+        .carousel-cards {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        .carousel-card {
+            background: #fff;
+            overflow: hidden;
+            width: 605px;
+            height: 260px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+        .carousel-card img {
+            width: 48%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .carousel-card-text {
+            width: 52%;
+            font-size: 24px;
+            font-weight: 400;
+            text-align: left;
+            margin: 0 0 0 0;
+            padding: 0 0 0 30px;
+            display: flex;
+            align-items: center;
+            height: 100%;
+        }
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #eee;
+            display: inline-block;
+        }
+        .dot.active {
+            background: #222;
+        }
+        .footer-newsletter {
+            width: 100%;
+            background: #fff;
+            border-top: 1px solid #eee;
+            padding: 30px 0 30px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .newsletter-left {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+        .newsletter-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .newsletter-desc {
+            font-size: 15px;
+            color: #444;
+        }
+        .newsletter-form {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .newsletter-form input[type="email"] {
+            width: 340px;
+            padding: 10px;
+            border: 1px solid #eee;
+            border-radius: 2px;
+            font-size: 15px;
+        }
+        .newsletter-form button {
+            padding: 10px 24px;
+            background: #fff;
+            border: 1px solid #222;
+            color: #222;
+            font-size: 15px;
+            cursor: pointer;
+            border-radius: 2px;
+            transition: background 0.2s;
+        }
+        .newsletter-form button:hover {
+            background: #222;
+            color: #fff;
+        }
+        .footer-links {
+            display: flex;
+            justify-content: space-between;
+            gap: 40px;
+            margin-top: 10px;
+        }
+        .footer-section-title {
+            font-size: 17px;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+        .footer-orders ul,
+        .footer-info ul,
+        .footer-sns ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .footer-orders li,
+        .footer-info li,
+        .footer-sns li {
+            font-size: 15px;
+            color: #222;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+        }
+        .footer-info-desc {
+            font-size: 14px;
+            color: #444;
+            margin-bottom: 8px;
+        }
+        .footer-contact .footer-icon {
+            margin-right: 7px;
+        }
+        .footer-sns .footer-icon {
+            font-family: 'FontAwesome', Arial, sans-serif;
+            margin-right: 8px;
+            font-size: 18px;
+        }
+        @media (max-width: 900px) {
+            .footer-links {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+        .news-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 90px 1fr;
+            row-gap: 10px;
+            grid-gap: 10px;
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto 20px auto;
+            padding: 10px 0;
+        }
+        .news-box-top-left {
+            grid-column: 1 / 2;
+            grid-row: 1 / 2;
+        }
+        .news-box-top-right {
+            grid-column: 2 / 3;
+            grid-row: 1 / 2;
+        }
+        .news-box-bottom-left {
+            grid-column: 1 / 2;
+            grid-row: 2 / 3;
+            justify-self: end;
+            width: 300px;
+        }
+        .news-box-bottom-center {
+            grid-column: 2 / 3;
+            grid-row: 2 / 3;
+            justify-self: start;
+        }
+        .news-box-bottom-right {
+            grid-column: 2 / 3;
+            grid-row: 2 / 3;
+            justify-self: end;
+        }
+        .news-box {
+            background: #fff;
+            min-height: 120px;
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-start;
+            padding: 18px 20px;
+            box-sizing: border-box;
+        }
+        .news-box-content {
+            font-size: 1.2rem;
+            color: #444;
+        }
+        @media (max-width: 900px) {
+            .news-grid {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto auto auto auto auto; /* Stack all items vertically */
+                gap: 16px; /* Smaller gap on mobile */
+                padding: 0 10px; /* Add horizontal padding */
+            }
+            .news-box-top-left,
+            .news-box-top-right,
+            .news-box-bottom-left,
+            .news-box-bottom-center,
+            .news-box-bottom-right {
+                grid-column: 1 / 2;
+                grid-row: auto !important; /* Reset explicit row assignments */
+                max-width: 100%; /* Allow boxes to take full width */
+                justify-self: stretch; /* Stretch to fill width */
+                padding: 15px;
+            }
+             .news-box-top-left {
+                 justify-self: start; /* Left align newsletter title/desc */
+             }
+            .news-box {
+                 min-height: auto; /* Allow height to adjust */
+            }
+             .newsletter-form {
+                 flex-direction: column; /* Stack form elements */
+                 gap: 10px;
+             }
+             .newsletter-form input[type="email"] {
+                 width: 100%; /* Make input take full width */
+             }
+        }
+        .newsletter-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .newsletter-desc {
+            font-size: 16px;
+            color: #888;
+        }
+        .newsletter-form {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+        }
+        .newsletter-form input[type="email"] {
+            width: 400px;
+            padding: 12px;
+            border: 1px solid #eee;
+            border-radius: 2px;
+            font-size: 16px;
+            background: #f5f5f5;
+            color: #888;
+        }
+        .newsletter-form button {
+            padding: 12px 32px;
+            background: #fff;
+            border: 1px solid #222;
+            color: #222;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 2px;
+            transition: background 0.2s;
+        }
+        .newsletter-form button:hover {
+            background: #222;
+            color: #fff;
+        }
+        .footer-section-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+        .footer-orders-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .footer-orders-list li {
+            font-size: 16px;
+            color: #888;
+            margin-bottom: 4px;
+        }
+        .footer-info-desc {
+            font-size: 15px;
+            color: #888;
+            margin-bottom: 8px;
+        }
+        .footer-contact {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .footer-contact li {
+            font-size: 15px;
+            color: #222;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+        }
+        .footer-icon {
+            margin-right: 8px;
+            font-size: 18px;
+            display: inline-block;
+            width: 24px;
+            min-width: 24px;
+            text-align: center;
+            vertical-align: middle;
+        }
+        .footer-icon img {
+            width: 20px;
+            height: 20px;
+            vertical-align: middle;
+        }
+        .footer-sns-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .footer-sns-list li {
+            font-size: 16px;
+            color: #888;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        .footer-sns-list li .footer-icon {
+            font-size: 22px;
+            width: 28px;
+            text-align: center;
+        }
+        footer {
+            width: 100%;
+            background: #fff;
+            border-top: 1px solid #eee;
+            margin-top: 0;
+            position: relative;
+        }
+        .footer-main {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 32px;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+        .footer-logo img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 2px solid #bbb;
+            object-fit: cover;
+            background: #fff;
+        }
+        .footer-copyright {
+            font-size: 18px;
+            color: #888;
+            margin: 0 20px;
+            flex: 1;
+            text-align: center; /* Center align text */
+        }
+        .footer-payments {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .payment-icon {
+            width: 40px;
+            height: 28px;
+            object-fit: contain;
+            background: #f5f5f5;
+            border-radius: 4px;
+            padding: 2px 6px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+        }
+        .footer-sns-list li .footer-icon {
+             /* アイコン画像やフォントアイコンのスタイル */
+             width: 24px; /* アイコンのサイズ */
+             height: 24px; /* アイコンのサイズ */
+             /* font-sizeもアイコンフォントの場合は調整 */
+             display: flex; /* 画像やフォントアイコンを中央に */
+             align-items: center;
+             justify-content: center;
+         }
+         .footer-sns-list li .footer-icon img {
+              width: 100%;
+              height: 100%;
+              object-fit: contain;
+         }
+        .footer-scrolltop {
+            position: fixed;
+            right: 32px;
+            bottom: 24px;
+            width: 40px; /* Slightly larger button */
+            height: 40px; /* Slightly larger button */
+            border-radius: 50%;
+            border: 1px solid #888;
+            background: #fff;
+            color: #222;
+            font-size: 24px; /* Larger arrow */
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s, color 0.2s;
+        }
+        .footer-scrolltop:hover {
+            background: #222;
+            color: #fff;
+        }
+        @media (max-width: 900px) {
+            .footer-main {
+                flex-direction: column;
+                gap: 16px;
+                padding: 16px 10px;
+            }
+            .footer-copyright {
+                text-align: center;
+                margin: 0;
+            }
+            .footer-logo img {
+                margin-bottom: 8px;
+            }
+            .footer-payments {
+                gap: 8px; /* Smaller gap on mobile */
+            }
+            .footer-scrolltop {
+                right: 10px;
+                bottom: 10px;
+            }
+        }
+        .timesale-section {
+            background: #faf9f6;
+            padding: 0 0 32px 0;
+            margin-bottom: 40px;
+        }
+        .timesale-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            padding: 32px 0 12px 0;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .timesale-title {
+            font-size: 18px;
+            font-weight: 400;
+            margin-bottom: 6px;
+        }
+        .timesale-subtitle {
+            color: #bfa23a;
+            font-size: 16px;
+            font-weight: 400;
+        }
+        .timesale-link {
+            color: #009fe3;
+            font-size: 16px;
+            font-weight: 400;
+            text-decoration: none;
+            margin-bottom: 8px;
+        }
+        .timesale-cards-bg {
+            background: #f3eedc;
+            border-radius: 12px;
+            padding: 24px 0 24px 0;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .timesale-cards {
+            display: flex;
+            gap: 24px;
+            overflow-x: auto;
+            padding: 0 24px;
+        }
+        .timesale-card {
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            min-width: 380px;
+            max-width: 420px;
+            flex: 0 0 auto;
+            display: flex;
+            gap: 0;
+        }
+        .timesale-card-imgwrap {
+            position: relative;
+            width: 160px;
+            min-width: 160px;
+            height: 180px;
+            border-radius: 16px 0 0 16px;
+            overflow: hidden;
+            background: #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .timesale-card-imgwrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .timesale-card-badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 38px;
+            height: 18px;
+            object-fit: contain;
+            background: #fff;
+            border-radius: 4px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+            padding: 2px 4px;
+        }
+        .timesale-card-info {
+            flex: 1;
+            padding: 18px 18px 18px 18px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .timesale-card-title {
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+        .timesale-card-sub {
+            font-size: 1.1rem;
+            color: #444;
+            margin-bottom: 10px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 200px;
+        }
+        .timesale-card-oldprice {
+            font-size: 1.1rem;
+            color: #888;
+            text-decoration: line-through;
+            margin-bottom: 10px;
+        }
+        .timesale-card-oldprice span {
+            text-decoration: none;
+            background: none;
+            color: #888;
+            font-size: 1rem;
+            margin-right: 8px;
+        }
+        .timesale-card-bottom {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .timesale-card-discount {
+            background: #bfa23a;
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 400;
+            border-radius: 16px;
+            padding: 4px 16px;
+            margin-right: 4px;
+        }
+        .timesale-card-newprice {
+            color: #bfa23a;
+            font-size: 26px;
+            font-weight: 400;
+        }
+        @media (max-width: 900px) {
+            .timesale-header, .timesale-cards-bg {
+                padding-left: 8px;
+                padding-right: 8px;
+            }
+            .timesale-cards {
+                padding: 0 8px;
+            }
+            .timesale-card {
+                min-width: 260px;
+                max-width: 320px;
+            }
+            .timesale-card-imgwrap {
+                width: 100px;
+                min-width: 100px;
+                height: 120px;
+            }
+        }
+        .news-list-section {
+            max-width: 700px;
+            margin: 40px auto;
+            padding: 0 8px 0 32px;
+            box-sizing: border-box;
+        }
+        .news-list-header {
+            display: flex;
+            align-items: baseline;
+            gap: 16px;
+            font-family: inherit;
+            margin-left: 32px;
+            margin-bottom: 16px;
+        }
+        .news-list-title-main {
+            font-size: 2rem;
+        }
+        .news-list-title-sub {
+            font-size: 1rem;
+        }
+        .news-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            padding-left: 32px;
+        }
+        .news-list-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 32px;
+            padding: 32px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .news-list-img {
+            width: 120px;
+            height: 90px;
+            object-fit: contain;
+            border-radius: 8px;
+            background: #fafafa;
+        }
+        .news-list-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .news-list-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 16px;
+            line-height: 1.3;
+        }
+        .news-list-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.1rem;
+            color: #888;
+        }
+        .news-list-dot {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 4px;
+        }
+        .news-list-category {
+            font-weight: 500;
+        }
+        .news-list-date {
+            color: #888;
+            margin-left: 12px;
+        }
+        @media (max-width: 900px) {
+            .news-list-item {
+                flex-direction: column;
+                gap: 12px;
+                padding: 24px 0;
+            }
+            .news-list-img {
+                width: 100%;
+                height: 180px;
+                object-fit: cover;
+            }
+            .news-list-title {
+                font-size: 1.2rem;
+            }
+        }
+        /* --- Responsive Adjustments --- */
+        @media (max-width: 900px) {
+            /* Header */
+            header nav ul {
+               gap: 5px;
+            }
+            .header-inner {
+               padding: 10px;
+            }
+             /* Subheader adjustments */
+             .subheader {
+                 height: 50px; /* Increase height for spacing */
+             }
+             .subheader nav ul {
+                 align-items: center;
+                 padding: 0 10px;
+             }
+             .subheader nav a {
+                 padding: 10px 0; /* Add vertical padding */
+             }
+
+            /* Hero */
+            .hero-content {
+                padding: 280px 10px 100px 10px; /* 上部パディングを調整してテキストをさらに下げる */
+            }
+            .hero-content img {
+                top: 100px;
+                height: 400px; /* 画像の高さを調整 */
+            }
+            .hero-content-h2 {
+                font-size: 24px;
+            }
+            .buttons button {
+                width: 180px;
+            }
+
+            /* Blog (News List Section) */
+            .news-list-section {
+                margin-top: 50px; /* Promotionとの間に余白を追加 */
+                max-width: 100%;
+                padding: 0 10px;
+            }
+            .news-list-header {
+                padding-left: 0;
+                margin-bottom: 10px;
+            }
+            .news-list {
+                padding-left: 0;
+            }
+
+            /* Collections */
+            .collections-grid {
+                padding: 0 10px 20px;
+                margin: 10px 0 50px 0;
+            }
+            .product-image {
+                 width: 100%;
+                 height: auto;
+            }
+             .add-to-cart {
+                 width: 100%;
+             }
+
+             /* allcollections */
+            .allcollections-row {
+                flex-direction: column;
+                gap: 20px;
+                padding: 0 10px;
+            }
+            .allcollections-item,
+            .allcollections-item.wide {
+                 width: 100%;
+                 max-width: 100%;
+                 min-width: 100%;
+                 height: auto; /* Allow height to adjust */
+                 min-height: 200px; /* Minimum height */
+            }
+             .allcollections-item img,
+             .allcollections-item.wide img {
+                 height: 200px;
+             }
+
+            /* Article Carousel */
+            .article-carousel {
+                margin: 40px 0;
+            }
+            .carousel-title {
+                 font-size: 1.5rem;
+             }
+            .carousel-cards {
+                flex-direction: column;
+                gap: 20px;
+                padding: 0 10px;
+            }
+            .carousel-card {
+                width: 100%;
+                 max-width: 100%;
+                 flex-direction: column; /* Stack image and text vertically */
+                 height: auto; /* Allow height to adjust */
+             }
+            .carousel-card img {
+                 width: 100%;
+                 height: 180px;
+             }
+             .carousel-card-text {
+                 width: 100%;
+                 padding: 15px; /* Adjust padding */
+                 text-align: center; /* Center text */
+                 height: auto;
+             }
+
+            /* News Grid */
+            .news-grid {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto auto auto auto auto; /* Stack all items vertically */
+                gap: 16px; /* Smaller gap on mobile */
+                padding: 0 10px; /* Add horizontal padding */
+            }
+            .news-box-top-left,
+            .news-box-top-right,
+            .news-box-bottom-left,
+            .news-box-bottom-center,
+            .news-box-bottom-right {
+                grid-column: 1 / 2;
+                grid-row: auto !important; /* Reset explicit row assignments */
+                max-width: 100%; /* Allow boxes to take full width */
+                justify-self: stretch; /* Stretch to fill width */
+                padding: 15px;
+            }
+             .news-box-top-left {
+                 justify-self: start; /* Left align newsletter title/desc */
+             }
+            .news-box {
+                 min-height: auto; /* Allow height to adjust */
+            }
+             .newsletter-form {
+                 flex-direction: column; /* Stack form elements */
+                 gap: 10px;
+             }
+             .newsletter-form input[type="email"] {
+                 width: 100%; /* Make input take full width */
+             }
+            .footer-links {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+             /* News List */
+             .news-list-section {
+                 max-width: 100%; /* Allow full width on mobile */
+                 padding: 0 10px; /* Add horizontal padding */
+             }
+             .news-list-header {
+                 padding-left: 0; /* Remove left padding on header */
+                 margin-bottom: 10px; /* Reduced margin */
+             }
+             .news-list {
+                 padding-left: 0; /* Remove left padding on list */
+             }
+            .news-list-item {
+                flex-direction: column;
+                gap: 12px;
+                padding: 16px 0;
+            }
+            .news-list-img {
+                width: 100%;
+                height: 180px;
+                object-fit: cover;
+            }
+            .news-list-title {
+                font-size: 1.1rem;
+                margin-bottom: 8px;
+            }
+             .news-list-meta {
+                 font-size: 0.9rem;
+             }
+
+            /* Footer */
+            .footer-main {
+                flex-direction: column;
+                gap: 16px;
+                padding: 16px 10px;
+            }
+            .footer-copyright {
+                text-align: center;
+                margin: 0; /* Reset default margin */
+                margin-bottom: 5px; /* Reduce bottom margin */
+            }
+            .footer-logo img {
+                margin-bottom: 8px;
+            }
+            .footer-payments {
+                gap: 8px; /* Smaller gap on mobile */
+            }
+             .footer-scrolltop {
+                 right: 10px;
+                 bottom: 10px;
+             }
+            
+             .footer-sns-list {
+             list-style: none;
+             padding: 0;
+             margin: 10px 0; /* SNSアイコンリストブロックの上下の隙間 */
+             display: flex; /* SNSアイコンを横並びに */
+             gap: 15px; /* SNSアイコン間の隙間 */
+             justify-content: center; /* SNSアイコンを中央に */
+             align-items: center;
+         }
+
+            /* Footer SNS Icons for Mobile */
+            .footer-sns-list li .footer-icon {
+                 /* Assuming img tag is used in HTML */
+                width: 24px;
+                height: 24px;
+                margin-right: 8px;
+            }
+            .footer-sns-list li .footer-icon img {
+                 width: 100%;
+                 height: 100%;
+                 object-fit: contain;
+            }
+
+            /* Styles for screens below 600px */
+            @media (max-width: 600px) {
+                 /* Collections: 2 columns */
+                .collections-grid {
+                    grid-template-columns: repeat(2, 1fr);
+                    gap: 10px; /* Adjust gap for smaller columns */
+                    padding: 0 5px 15px; /* Adjust padding */
+                }
+
+                /* allcollections: 1 column */
+                .allcollections-row {
+                    flex-direction: column;
+                    gap: 15px; /* Adjust gap */
+                    padding: 0 5px; /* Adjust padding */
+                }
+                 .allcollections-item,
+                 .allcollections-item.wide {
+                     width: 100%;
+                     max-width: 100%;
+                     min-width: 100%;
+                 }
+
+                 /* Footer and related sections adjustment for below 600px */
+                 .news-box-bottom-left,
+                 .news-box-bottom-center,
+                 .news-box-bottom-right {
+                     padding: 15px 10px; /* Adjust padding */
+                     border-bottom: 1px solid #eee; /* Add bottom border */
+                 }
+                .news-box-bottom-right {
+                    border-bottom: none; /* Remove border for the last item */
+                }
+                
+                /* Adjustments for "ご注文" section content */
+                .news-box-bottom-left .footer-section-title {
+                    margin-bottom: 10px; /* Adjust margin below title */
+                }
+                .news-box-bottom-left .footer-orders-list li {
+                    color: #222; /* Adjust text color if needed */
+                    margin-bottom: 8px; /* Adjust margin between list items */
+                }
+
+                /* Adjustments for "フッター情報" and "カスタマーサービス" section content */
+                .news-box-bottom-center .footer-section-title {
+                    position: relative; /* Needed for absolute positioning of pseudo-element */
+                    padding-right: 20px; /* Make space for the icon */
+                    margin-bottom: 8px; /* Adjust margin below title */
+                }
+                .news-box-bottom-center .footer-section-title::after {
+                    content: '\00D7'; /* Unicode for multiplication sign (x) */
+                    position: absolute;
+                    top: 50%;
+                    right: 0;
+                    transform: translateY(-50%);
+                    font-size: 1.2rem;
+                    color: #222; /* Icon color */
+                }
+                .news-box-bottom-center .footer-info-desc {
+                    margin-bottom: 15px; /* Space below description */
+                    color: #444; /* Adjust color */
+                    font-size: 14px; /* Adjust size */
+                }
+                 .news-box-bottom-center .footer-contact {
+                     margin-top: 10px; /* Space above contact list */
+                 }
+                .news-box-bottom-center .footer-contact li {
+                     margin-bottom: 8px; /* Space between contact items */
+                 }
+
+                 /* SNS text removal and placement below copyright */
+                 .news-box-bottom-right {
+                     /* Remove default news-box padding and border for this specific item below 600px if needed to align with footer-main */
+                     padding: 0 10px; /* Adjust horizontal padding */
+                     padding-top: 0; /* Remove top padding */
+                     padding-bottom: 0; /* Remove bottom padding */
+                     border-bottom: none; /* Ensure no border if aligning with footer */
+                     margin-top: 0; /* Ensure no top margin from grid layout */
+                     /* margin-bottom: 0; */ /* Ensure no bottom margin from grid layout */
+                 }
+                 .news-box-bottom-right .footer-section-title { /* "SNSをフォロー" タイトル */
+                     display: none; /* Hide the title */
+                 }
+                 .news-box-bottom-right .footer-sns-list {
+                     /* font-size: 0; */ /* List item text is hidden by li rule below */
+                     /* Adjust margins to position correctly below copyright */
+                     margin-top: 0px; /* Space above SNS icons - further reduction */
+                     margin-bottom: 15px; /* Space below SNS icons */
+                     display: flex; /* Ensure it's a flex container for centering */
+                     justify-content: center; /* Center the icons horizontally */
+                     padding: 0; /* Remove any default padding */
+                     gap: 15px; /* Space between icons */
+                 }
+                 .news-box-bottom-right .footer-sns-list li {
+                     font-size: 0; /* Hide list item text */
+                     /* Ensure list items are inline or flex items */
+                     /* display: inline-block; */ /* Or use flex items controlled by parent */
+                     margin: 0; /* Remove any default list item margin */
+                 }
+                 .news-box-bottom-right .footer-sns-list li .footer-icon {
+                     /* Assuming img tag is used in HTML */
+                     width: 24px;
+                     height: 24px;
+                     margin-right: 0; /* Remove margin if needed */
+                     display: block; /* Ensure icon takes up space */
+                 }
+                 .news-box-bottom-right .footer-sns-list li .footer-icon img {
+                     width: 100%;
+                     height: 100%;
+                     object-fit: contain;
+                 }
+
+                 /* Adjust spacing between copyright and SNS icons - primarily handled by .footer-sns-list margin-top */
+                 /* footer .footer-copyright { margin-bottom: 10px; } */
+                 /* .footer-sns-list { margin-top: 0; margin-bottom: 15px; } */
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="announcement-bar">最終クリアランス:最大20%オフ</div>
+        <div class="header-inner">
+            <div class="logo">
+                <a href="#"><img src="https://raw.githubusercontent.com/kzmSuzuki/webPropramming1_1Q/d72c522480320dde15543e2e624df7a4cf36c842/src/icon/MisellDesktop.svg" alt="Misei ロゴ"></a>
+            </div>
+            <nav>
+                <ul>
+                    <li class="icon-tooltip">
+                        <a href="#" class="icon-btn">
+                            <img src="https://raw.githubusercontent.com/kzmSuzuki/webPropramming1_1Q/d72c522480320dde15543e2e624df7a4cf36c842/src/icon/icon-help.svg" alt="help">
+                            <span class="tooltip-text">ヘルプ</span>
+                        </a>
+                    </li>
+                    <li class="icon-tooltip">
+                        <a href="#" class="icon-btn">
+                            <img src="https://raw.githubusercontent.com/kzmSuzuki/webPropramming1_1Q/d72c522480320dde15543e2e624df7a4cf36c842/src/icon/icon-account.svg" alt="account">
+                            <span class="tooltip-text">アカウント</span>
+                        </a>
+                    </li>
+                    <li class="icon-tooltip">
+                        <a href="#" class="icon-btn">
+                            <img src="https://raw.githubusercontent.com/kzmSuzuki/webPropramming1_1Q/d72c522480320dde15543e2e624df7a4cf36c842/src/icon/icon-favorite.svg" alt="favorite">
+                            <span class="tooltip-text">お気に入り</span>
+                        </a>
+                    </li>
+                    <li class="icon-tooltip">
+                        <a href="#" class="icon-btn">
+                            <img src="https://raw.githubusercontent.com/kzmSuzuki/webPropramming1_1Q/d72c522480320dde15543e2e624df7a4cf36c842/src/icon/icon-cart.svg" alt="cart">
+                            <span class="tooltip-text">カート</span>
+                            <span class="cart-count-kakko">(</span>
+                            <span class="cart-count">0</span>
+                            <span class="cart-count-kakko">)</span>
+                        </a>
+                    </li>
+                    <li class="icon-tooltip">
+                        <a href="#" class="icon-btn">
+                            日本 JPY(¥)
+                            <img src="https://raw.githubusercontent.com/kzmSuzuki/webPropramming1_1Q/d72c522480320dde15543e2e624df7a4cf36c842/src/icon/icon-chevron-down.svg" alt="menu">
+                            <span class="tooltip-text">通貨</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div class="subheader">
+            <div class="subheader-underline"></div>
+            <nav>
+                <ul>
+                    <li><a href="#hero-section">ショップ</a></li>
+                    <li><a href="#">ブログ</a></li>
+                    <li><a href="#collections">コレクションリスト</a></li>
+                    <li><a href="#">おすすめ</a></li>
+                    <li class="subheader-nav-right">
+                        <a href="#">検索<img src="https://raw.githubusercontent.com/kzmSuzuki/webPropramming1_1Q/d72c522480320dde15543e2e624df7a4cf36c842/src/icon/icon-serch.svg" alt="search"></a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <promotion>
+            <div class="hero-content" id="hero-section">
+              <img src="https://github.com/kzmSuzuki/webPropramming1_1Q/blob/main/src/img/top.jpg?raw=true" alt="hero">
+              <p class="hero-content-p1">オンラインショップ限定</p>
+              <h2 class="hero-content-h2">ラストクリアランス</h2>
+              <p class="hero-content-p2">30〜80% off</p>
+              <div class="buttons">
+                <button>ウィメンズ</button>
+                <button>メンズ</button>
+              </div>
+            </div>
+        </promotion>
+        <blog class="news-list-section">
+            <div class="news-list-header">
+                <span class="news-list-title-main">News</span>
+                <span class="news-list-title-sub">ニュース</span>
+            </div>
+            <ul class="news-list">
+                <li class="news-list-item">
+                    <img src="https://c.imgz.jp/549/91712549/91712549b_2_d_215.jpg" alt="記事画像" class="news-list-img">
+                    <div class="news-list-info">
+                        <div class="news-list-title">新商品！ナイロン...</div>
+                        <div class="news-list-meta">
+                            <span class="news-list-dot" style="background:#00bcd4"></span>
+                            <span class="news-list-category">ファッション</span>
+                            <span class="news-list-date">2025/05/15</span>
+                        </div>
+                    </div>
+                </li>
+                <li class="news-list-item">
+                    <img src="https://thumb.photo-ac.com/e8/e8be63cab1435b05744b06306e4f9654_t.jpeg" alt="記事画像" class="news-list-img">
+                    <div class="news-list-info">
+                        <div class="news-list-title" style="color:#e754a6;">こどもでも畳みやすい新商品！...</div>
+                        <div class="news-list-meta">
+                            <span class="news-list-dot" style="background:#4caf50"></span>
+                            <span class="news-list-category">ライフスタイル</span>
+                            <span class="news-list-date">2025/05/01</span>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </blog>
+        <collections>
+            <div class="collections-header" id="collections">
+                <h2>コレクションズ</h2>
+            </div>
+            <div class="collections-grid">
+                <!-- Product Item 1 -->
+                <div class="product-item">
+                    <div class="product-image">
+                        <img src="https://github.com/kzmSuzuki/webPropramming1_1Q/blob/main/src/img/collections1.jpg?raw=true" alt="Product Image">
+                        <span class="badge">予約注文</span>
+                    </div>
+                    <div class="product-details">
+                        <p class="brand">MISEル</p>
+                        <p class="name">サングラス</p>
+                        <p class="price">¥10,000</p>
+                        <div class="color-options">
+                            <span class="color-circle" style="background-color: navy;"></span>
+                            <span class="color-circle" style="background-color: beige;"></span>
+                            <span class="color-circle" style="background-color: pink;"></span>
+                            <span class="color-circle" style="background-color: coral;"></span>
+                            <span class="color-circle" style="background-color: olive;"></span>
+                            <span class="color-circle" style="background-color: lightgreen;"></span>
+                        </div>
+                        <div class="size-options">
+                            <button class="size-button selected">S</button>
+                            <button class="size-button">M</button>
+                            <button class="size-button">XL</button>
+                        </div>
+                        <div class="quantity-control">
+                            <button class="quantity-minus">-</button>
+                            <input type="text" value="1" class="quantity-input">
+                            <button class="quantity-plus">+</button>
+                        </div>
+                        <div class="button-and-actions">
+                            <button class="add-to-cart">カートに入れる</button>
+                            <div class="product-actions">
+                                <span class="icon">&#x2661;</span> <!-- Heart icon -->
+                                <span class="icon">&#x2696;</span> <!-- Scales icon -->
+                            </div>
+                        </div>
+                        <div class="star-rating">
+                            &#x2605;&#x2605;&#x2605;&#x2605;&#x2605;
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Item 2 -->
+                <div class="product-item">
+                    <div class="product-image">
+                        <img src="https://github.com/kzmSuzuki/webPropramming1_1Q/blob/main/src/img/collections2.jpg?raw=true" alt="Product Image">
+                    </div>
+                    <div class="product-details">
+                        <p class="brand">MISEル</p>
+                        <p class="name">ルーズフィットジーンズ</p>
+                        <p class="price">¥40,000</p>
+                        <div class="color-options">
+                            <span class="color-circle" style="background-color: navy;"></span>
+                            <span class="color-circle" style="background-color: beige;"></span>
+                            <span class="color-circle" style="background-color: pink;"></span>
+                            <span class="color-circle" style="background-color: coral;"></span>
+                            <span class="color-circle" style="background-color: olive;"></span>
+                            <span class="color-circle" style="background-color: lightgreen;"></span>
+                        </div>
+                        <div class="size-options">
+                            <button class="size-button selected">S</button>
+                            <button class="size-button">M</button>
+                            <button class="size-button">XL</button>
+                        </div>
+                        <div class="quantity-control">
+                            <button class="quantity-minus">-</button>
+                            <input type="text" value="1" class="quantity-input">
+                            <button class="quantity-plus">+</button>
+                        </div>
+                        <div class="button-and-actions">
+                            <button class="add-to-cart">カートに入れる</button>
+                            <div class="product-actions">
+                                <span class="icon">&#x2661;</span> <!-- Heart icon -->
+                                <span class="icon">&#x2696;</span> <!-- Scales icon -->
+                            </div>
+                        </div>
+                        <div class="star-rating">
+                            &#x2605;&#x2605;&#x2605;&#x2605;&#x2605;
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Item 3 -->
+                <div class="product-item">
+                    <div class="product-image">
+                        <img src="https://github.com/kzmSuzuki/webPropramming1_1Q/blob/main/src/img/collections3.jpg?raw=true" alt="Product Image">
+                    </div>
+                    <div class="product-details">
+                        <p class="brand">MISEル</p>
+                        <p class="name">ニットウェア</p>
+                        <p class="price">¥30,000</p>
+                        <div class="color-options">
+                            <span class="color-circle" style="background-color: navy;"></span>
+                            <span class="color-circle" style="background-color: beige;"></span>
+                            <span class="color-circle" style="background-color: pink;"></span>
+                            <span class="color-circle" style="background-color: coral;"></span>
+                            <span class="color-circle" style="background-color: olive;"></span>
+                            <span class="color-circle" style="background-color: lightgreen;"></span>
+                        </div>
+                        <div class="size-options">
+                            <button class="size-button selected">S</button>
+                            <button class="size-button">M</button>
+                            <button class="size-button">XL</button>
+                        </div>
+                        <div class="quantity-control">
+                            <button class="quantity-minus">-</button>
+                            <input type="text" value="1" class="quantity-input">
+                            <button class="quantity-plus">+</button>
+                        </div>
+                        <div class="button-and-actions">
+                            <button class="add-to-cart">カートに入れる</button>
+                            <div class="product-actions">
+                                <span class="icon">&#x2661;</span> <!-- Heart icon -->
+                                <span class="icon">&#x2696;</span> <!-- Scales icon -->
+                            </div>
+                        </div>
+                        <div class="star-rating">
+                            &#x2605;&#x2605;&#x2605;&#x2605;&#x2605;
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Item 4 -->
+                <div class="product-item">
+                    <div class="product-image">
+                        <img src="https://github.com/kzmSuzuki/webPropramming1_1Q/blob/main/src/img/collections4.jpg?raw=true" alt="Product Image">
+                        <span class="badge">予約注文</span>
+                    </div>
+                    <div class="product-details">
+                        <p class="brand">MISEル</p>
+                        <p class="name">ダウンベスト</p>
+                        <p class="price">¥50,000</p>
+                        <div class="color-options">
+                            <span class="color-circle" style="background-color: navy;"></span>
+                            <span class="color-circle" style="background-color: beige;"></span>
+                            <span class="color-circle" style="background-color: pink;"></span>
+                            <span class="color-circle" style="background-color: coral;"></span>
+                            <span class="color-circle" style="background-color: olive;"></span>
+                            <span class="color-circle" style="background-color: lightgreen;"></span>
+                        </div>
+                        <div class="size-options">
+                            <button class="size-button selected">S</button>
+                            <button class="size-button">M</button>
+                            <button class="size-button">XL</button>
+                        </div>
+                        <div class="quantity-control">
+                            <button class="quantity-minus">-</button>
+                            <input type="text" value="1" class="quantity-input">
+                            <button class="quantity-plus">+</button>
+                        </div>
+                        <div class="button-and-actions">
+                            <button class="add-to-cart">カートに入れる</button>
+                            <div class="product-actions">
+                                <span class="icon">&#x2661;</span> <!-- Heart icon -->
+                                <span class="icon">&#x2696;</span> <!-- Scales icon -->
+                            </div>
+                        </div>
+                        <div class="star-rating">
+                            &#x2605;&#x2605;&#x2605;&#x2605;&#x2605;
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="collections-btn">
+                <button>すべてのコレクションを見る</button>
+            </div>
+        </collections>
+        <allcollections>
+            <div class="allcollections-grid">
+                <div class="allcollections-row">
+                    <div class="allcollections-item">
+                        <img src="https://raw.githubusercontent.com/kzmSuzuki/webPropramming1_1Q/main/src/img/womens.jpg" alt="ウィメンズ">
+                        <div class="allcollections-label">ウィメンズ</div>
+                    </div>
+                    <div class="allcollections-item">
+                        <img src="https://raw.githubusercontent.com/kzmSuzuki/webPropramming1_1Q/main/src/img/mens.jpg" alt="メンズ">
+                        <div class="allcollections-label">メンズ</div>
+                    </div>
+                    <div class="allcollections-item goods">
+                        <img src="https://raw.githubusercontent.com/kzmSuzuki/webPropramming1_1Q/main/src/img/goods.jpg" alt="グッズ">
+                        <div class="allcollections-label">グッズ</div>
+                    </div>
+                </div>
+                <div class="allcollections-row">
+                    <div class="allcollections-item wide">
+                        <img src="https://raw.githubusercontent.com/kzmSuzuki/webPropramming1_1Q/main/src/img/color.jpg" alt="新着">
+                        <div class="allcollections-overlay">
+                            <div class="allcollections-desc">新着</div>
+                            <div class="allcollections-title">選べるカラー</div>
+                            <div class="allcollections-title-mini">色鮮やかなエッセンシャルスタイル</div>
+                            <button class="allcollections-btn-black">詳細を見る</button>
+                        </div>
+                    </div>
+                    <div class="allcollections-item wide">
+                        <img src="https://raw.githubusercontent.com/kzmSuzuki/webPropramming1_1Q/main/src/img/colaboration.jpg" alt="コラボレーション">
+                        <div class="allcollections-overlay">
+                            <div class="allcollections-desc">それらすべてを発見</div>
+                            <div class="allcollections-title">コラボレーション</div>
+                            <button class="allcollections-btn-black">詳細を見る</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </allcollections>
+        <boxes>
+            <div class="article-carousel">
+                <h2 class="carousel-title">記事カルーセル</h2>
+                <div class="carousel-cards">
+                    <div class="carousel-card">
+                        <img src="https://github.com/kzmSuzuki/webPropramming1_1Q/blob/main/src/img/2025SpringSummer.jpg?raw=true" alt="2025春夏コレクション">
+                        <div class="carousel-card-text">2025春夏コレクション</div>
+                    </div>
+                    <div class="carousel-card">
+                        <img src="https://github.com/kzmSuzuki/webPropramming1_1Q/blob/main/src/img/LifeWearMagazine.jpg?raw=true" alt="LifeWear magazine 春夏号">
+                        <div class="carousel-card-text">LifeWear magazine<br>春夏号</div>
+                    </div>
+                </div>
+                <div class="carousel-dots">
+                    <span class="dot active"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+            </div>
+        </boxes>
+        <news>
+            <div class="news-grid">
+                <!-- 上段左: メルマガの購読タイトル・説明 -->
+                <div class="news-box news-box-top news-box-top-left">
+                    <div>
+                        <div class="newsletter-title">メルマガの購読</div>
+                        <div class="newsletter-desc">『MISEル』のメルマガを登録してオトクな情報・最新の情報を受け取ろう！</div>
+                    </div>
+                </div>
+                <!-- 上段右: メルマガフォーム -->
+                <div class="news-box news-box-top news-box-top-right">
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="メールアドレスを入力してください" required>
+                        <button type="submit">購読!</button>
+                    </form>
+                </div>
+                <!-- 下段左: ご注文 -->
+                <div class="news-box news-box-bottom news-box-bottom-left">
+                    <div>
+                        <div class="footer-section-title">ご注文</div>
+                        <ul class="footer-orders-list">
+                            <li>個人アカウント</li>
+                            <li>カートを見る</li>
+                            <li>プライバシーポリシー</li>
+                            <li>クッキーの使用</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- 下段中央: フッター情報・カスタマーサービス -->
+                <div class="news-box news-box-bottom news-box-bottom-center">
+                    <div>
+                        <div class="footer-section-title">フッター情報</div>
+                        <div class="footer-info-desc">ご不明な点ございましたらよくある質問をご覧ください。<br>またはカスタマーサービスまでお問い合わせください。</div>
+                        <div class="footer-section-title">カスタマーサービス</div>
+                        <ul class="footer-contact">
+                            <li><span class="footer-icon"><img src="https://raw.githubusercontent.com/kzmSuzuki/webPropramming1_1Q/d72c522480320dde15543e2e624df7a4cf36c842/src/icon/icon-tel.svg"></span>電話番号: 00-0000-0000</li>
+                            <li><span class="footer-icon"><img src="https://raw.githubusercontent.com/kzmSuzuki/webPropramming1_1Q/d72c522480320dde15543e2e624df7a4cf36c842/src/icon/icon-clock.svg"></span>月曜 - 金曜: 9:00 am - 6:00 pm</li>
+                            <li><span class="footer-icon"></span>土曜: 9:00 am - 4:00 pm</li>
+                            <li><span class="footer-icon"></span>日曜: 9:00 am - 2:00 pm</li>
+                            <li><span class="footer-icon"><img src="https://raw.githubusercontent.com/kzmSuzuki/webPropramming1_1Q/d72c522480320dde15543e2e624df7a4cf36c842/src/icon/icon-mail.svg"></span>E-mailでのお問い合わせ</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- 下段右: SNSをフォロー -->
+                <div class="news-box news-box-bottom news-box-bottom-right">
+                    <div>
+                        <div class="footer-section-title">SNSをフォロー</div>
+                        <ul class="footer-sns-list">
+                            <li><span class="footer-icon"><img src="https://raw.githubusercontent.com/kzmSuzuki/webPropramming1_1Q/d72c522480320dde15543e2e624df7a4cf36c842/src/icon/Icon-facebook.svg"></span> Facebook</li>
+                            <li><span class="footer-icon"><img src="https://raw.githubusercontent.com/kzmSuzuki/webPropramming1_1Q/d72c522480320dde15543e2e624df7a4cf36c842/src/icon/Icon-x.svg"></span> Twitter</li>
+                            <li><span class="footer-icon"><img src="https://raw.githubusercontent.com/kzmSuzuki/webPropramming1_1Q/d72c522480320dde15543e2e624df7a4cf36c842/src/icon/Icon-Instagram.svg"></span> Instagram</li>
+                            <li><span class="footer-icon"><img src="https://raw.githubusercontent.com/kzmSuzuki/webPropramming1_1Q/d72c522480320dde15543e2e624df7a4cf36c842/src/icon/Icon-pinterest.svg"></span> Pinterest</li>
+                            <li><span class="footer-icon"><img src="https://raw.githubusercontent.com/kzmSuzuki/webPropramming1_1Q/d72c522480320dde15543e2e624df7a4cf36c842/src/icon/Icon-Youtube.svg"></span> YouTube</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </news>
+    </main>
+    <footer>
+        <div class="footer-main">
+            <div class="footer-logo">
+                <img src="https://raw.githubusercontent.com/kzmSuzuki/webPropramming1_1Q/main/src/icon/MisellDesktop.svg" alt="Misell ロゴ">
+            </div>
+            <div class="footer-copyright">
+                Copyright ©2024, Misell Powered by Shopify
+            </div>
+            <div class="footer-payments">
+                <img src="https://raw.githubusercontent.com/kzmSuzuki/webPropramming1_1Q/d72c522480320dde15543e2e624df7a4cf36c842/src/icon/icon-Visa.svg" alt="VISA" class="payment-icon">
+                <img src="https://raw.githubusercontent.com/kzmSuzuki/webPropramming1_1Q/d72c522480320dde15543e2e624df7a4cf36c842/src/icon/icon-payment-jcb.svg" alt="JCB" class="payment-icon">
+                <img src="https://raw.githubusercontent.com/kzmSuzuki/webPropramming1_1Q/d72c522480320dde15543e2e624df7a4cf36c842/src/icon/icon-payment-shopify-pay.svg" alt="Apple Pay" class="payment-icon">
+                <img src="https://raw.githubusercontent.com/kzmSuzuki/webPropramming1_1Q/d72c522480320dde15543e2e624df7a4cf36c842/src/icon/icon-payment-google-pay.svg" alt="Google Pay" class="payment-icon">
+            </div>
+        </div>
+        <button class="footer-scrolltop" onclick="window.scrollTo({top:0,behavior:'smooth'});" title="ページトップへ">↑</button>
+    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // コレクションリストリンクのクリックイベントを追加
+            const collectionsLink = document.querySelector('a[href="#collections"]');
+            if (collectionsLink) {
+                collectionsLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const headerHeight = document.querySelector('header').offsetHeight;
+                    const collectionsSection = document.getElementById('collections');
+                    const targetPosition = collectionsSection.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                });
+            }
+
+            const logoLink = document.querySelector('logo a');
+            if (logoLink) {
+                logoLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+            }
+            let cartCount = 0;
+            const cartCountSpan = document.querySelector('.cart-count');
+            if (cartCountSpan) {
+                cartCountSpan.textContent = cartCount;
+            }
+            // ツールチップのクリック表示
+            document.querySelectorAll('.icon-tooltip .icon-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    document.querySelectorAll('.icon-tooltip').forEach(tip => tip.classList.remove('active'));
+                    this.parentElement.classList.add('active');
+                });
+            });
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.icon-tooltip')) {
+                    document.querySelectorAll('.icon-tooltip').forEach(tip => tip.classList.remove('active'));
+                }
+            });
+
+            // サイズボタンの動的な選択状態制御
+            document.querySelectorAll('.size-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    // 同じ商品アイテム内の他のサイズボタンを取得
+                    const sizeOptionsDiv = this.closest('.size-options');
+                    if (sizeOptionsDiv) {
+                        const buttonsInThisSet = sizeOptionsDiv.querySelectorAll('.size-button');
+
+                        // すべてのボタンから'selected'クラスを削除
+                        buttonsInThisSet.forEach(btn => {
+                            btn.classList.remove('selected');
+                        });
+
+                        // クリックされたボタンに'selected'クラスを追加
+                        this.classList.add('selected');
+
+                        // ここで選択されたサイズを別途処理するなどの拡張が可能
+                        // 例: console.log('Selected size:', this.textContent);
+                    }
+                });
+            });
+
+        });
+        // カルーセルドットの動的切り替え
+        document.addEventListener('DOMContentLoaded', function() {
+            const dots = document.querySelectorAll('.carousel-dots .dot');
+            dots.forEach((dot) => {
+                dot.addEventListener('click', function() {
+                    dots.forEach(d => d.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Quantity control for all product items
+            document.querySelectorAll('.quantity-control').forEach(control => {
+                const minusBtn = control.querySelector('.quantity-minus');
+                const plusBtn = control.querySelector('.quantity-plus');
+                const input = control.querySelector('.quantity-input');
+
+                // Get initial quantity (or set to 1 if input is empty/invalid)
+                let quantity = parseInt(input.value) || 1;
+                input.value = quantity; // Ensure input shows initial quantity
+
+                // Event listener for minus button
+                minusBtn.addEventListener('click', () => {
+                    if (quantity > 1) { // Prevent quantity from going below 1
+                        quantity--;
+                        input.value = quantity;
+                        // You would typically update a variable/state here
+                    }
+                });
+
+                // Event listener for plus button
+                plusBtn.addEventListener('click', () => {
+                    quantity++;
+                    input.value = quantity;
+                    // You would typically update a variable/state here
+                });
+
+                // Optional: Add input validation if user types directly
+                input.addEventListener('change', () => {
+                    let newQuantity = parseInt(input.value);
+                    if (isNaN(newQuantity) || newQuantity < 1) {
+                        newQuantity = 1; // Default to 1 if invalid
+                    }
+                    quantity = newQuantity;
+                    input.value = quantity;
+                    // You would typically update a variable/state here
+                });
+            });
+        });
+    </script>
+    <script>
+        // SNSアイコンリストの移動制御
+        function moveSnsList() {
+            const footerCopyright = document.querySelector('.footer-copyright');
+            const snsList = document.querySelector('.footer-sns-list');
+            const originalParent = snsList.parentElement;
+            const footerMain = document.querySelector('.footer-main');
+            const originalSnsCard = document.querySelector('.news-box-bottom-right');
+
+            if (window.innerWidth <= 600) {
+                // 元のSNSカードを非表示
+                if (originalSnsCard) {
+                    originalSnsCard.style.display = 'none';
+                }
+
+                // SNSリストを移動
+                if (snsList.parentElement !== footerMain) {
+                    footerMain.insertBefore(snsList, footerCopyright.nextSibling);
+                    snsList.style.marginTop = '10px';
+                    snsList.style.marginBottom = '15px';
+                    snsList.style.display = 'flex';
+                    snsList.style.justifyContent = 'center';
+                    snsList.style.gap = '15px';
+
+                    // SNSテキストを非表示
+                    snsList.querySelectorAll('li').forEach(li => {
+                        const icon = li.querySelector('.footer-icon');
+                        if (icon) {
+                            // テキストを非表示にし、アイコンのみを表示
+                            li.innerHTML = '';
+                            li.appendChild(icon);
+                        }
+                    });
+                }
+            } else {
+                // 元のSNSカードを表示
+                if (originalSnsCard) {
+                    originalSnsCard.style.display = '';
+                }
+
+                // SNSリストを元の位置に戻す
+                if (snsList.parentElement !== originalParent) {
+                    originalParent.appendChild(snsList);
+                    snsList.style = '';
+
+                    // SNSテキストを再表示
+                    snsList.querySelectorAll('li').forEach(li => {
+                        const icon = li.querySelector('.footer-icon');
+                        if (icon) {
+                            // アイコンとテキストを再構築
+                            const text = li.getAttribute('data-text') || '';
+                            li.innerHTML = `<span class="footer-icon">${icon.innerHTML}</span> ${text}`;
+                        }
+                    });
+                }
+            }
+        }
+
+        // 初期表示時とリサイズ時に実行
+        document.addEventListener('DOMContentLoaded', moveSnsList);
+        window.addEventListener('resize', moveSnsList);
+    </script>
+</body>
+</html>
