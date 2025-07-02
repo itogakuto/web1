@@ -132,9 +132,20 @@
         }
         .subheader-nav-right {
             margin-left: auto;
+            display: flex;
+            align-items: center;
+            height: 100%;
+        }
+        .subheader-nav-right img {
+            vertical-align: middle;
+            display: inline-block;
+            height: 1em;
+            width: auto;
+            margin-left: 2px;
         }
         .subheader nav ul {
             display: flex;
+            justify-content: flex-start;
         }
         .subheader-nav-right img {
             width: 16px;
@@ -1206,16 +1217,17 @@
                 gap: 0;
                 padding: 0;
                 flex-wrap: nowrap;
-                justify-content: space-between;
+                justify-content: flex-start;
             }
             .subheader nav li {
-                flex: 1 1 0;
+                flex: 0 1 auto;
                 min-width: 0;
                 text-align: center;
             }
             .subheader nav a {
                 font-size: 10px !important;
-                padding: 4px 0;
+                padding: 6px 2px;
+                letter-spacing: 0;
                 white-space: nowrap;
                 display: block;
                 width: 100%;
